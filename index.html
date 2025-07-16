@@ -511,13 +511,6 @@
         </div>
       </section>
 
-      <!-- Séparateur décoratif -->
-      <div class="w-full flex justify-center my-8">
-        <svg height="8" width="200" class="text-blue-200">
-          <ellipse cx="100" cy="4" rx="100" ry="4" fill="currentColor" />
-        </svg>
-      </div>
-
       <!-- Contact -->
       <section
         id="contact"
@@ -624,83 +617,119 @@
 
       <!-- Footer -->
       <footer
-        class="bg-blue-900 text-white py-8 px-4 flex flex-col md:flex-row justify-between items-center gap-4"
+        class="w-full bg-gradient-to-r from-blue-900 to-blue-800 text-white pt-10 pb-4 px-4 md:px-16"
       >
-        <div class="flex flex-col gap-1">
-          <span class="font-bold">MopilaSanté</span>
-          <span>Kinshasa, RDC</span>
-          <span>Email : contact@mopilasanté.cd</span>
+        <div
+          class="max-w-7xl mx-auto flex flex-col md:flex-row md:justify-between md:items-start gap-8"
+        >
+          <!-- Logo et contact -->
+          <div
+            class="flex-1 flex flex-col items-center md:items-start mb-6 md:mb-0"
+          >
+            <img
+              src="images/union.jpg"
+              alt="Logo MopilaSanté"
+              class="h-14 w-14 rounded-full bg-blue-100 object-cover mb-2 shadow"
+            />
+            <span class="font-bold text-xl text-green-400 mb-1"
+              >MopilaSanté</span
+            >
+            <span class="text-blue-100">Kinshasa, RDC</span>
+            <span class="text-blue-100">contact@mopilasanté.cd</span>
+            <span class="text-blue-100">+243 900 000 000</span>
+          </div>
+          <!-- Navigation -->
+          <div
+            class="flex-1 flex flex-col items-center md:items-start mb-6 md:mb-0"
+          >
+            <span class="font-bold text-lg text-blue-200 mb-2">Navigation</span>
+            <ul class="space-y-1">
+              <li>
+                <a href="#accueil" class="hover:text-green-400 transition"
+                  >Accueil</a
+                >
+              </li>
+              <li>
+                <a href="#apropos" class="hover:text-green-400 transition"
+                  >À propos</a
+                >
+              </li>
+              <li>
+                <a href="#valeurs" class="hover:text-green-400 transition"
+                  >Nos valeurs</a
+                >
+              </li>
+              <li>
+                <a href="#stats" class="hover:text-green-400 transition"
+                  >Statistiques</a
+                >
+              </li>
+              <li>
+                <a href="#partenaires" class="hover:text-green-400 transition"
+                  >Partenaires</a
+                >
+              </li>
+              <li>
+                <a href="#temoignages" class="hover:text-green-400 transition"
+                  >Témoignages</a
+                >
+              </li>
+              <li>
+                <a
+                  href="#fonctionnement"
+                  class="hover:text-green-400 transition"
+                  >Comment ça marche</a
+                >
+              </li>
+              <li>
+                <a href="#contact" class="hover:text-green-400 transition"
+                  >Contact</a
+                >
+              </li>
+            </ul>
+          </div>
+          <!-- Réseaux sociaux -->
+          <div class="flex-1 flex flex-col items-center md:items-start">
+            <span class="font-bold text-lg text-blue-200 mb-2"
+              >Suivez-nous</span
+            >
+            <div class="flex gap-4 mt-2">
+              <a
+                href="#"
+                class="bg-blue-700 hover:bg-green-400 hover:text-blue-900 transition rounded-full p-2"
+                ><svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                  <path
+                    d="M22.46 6c-.77.35-1.6.59-2.47.7a4.3 4.3 0 0 0 1.88-2.37 8.59 8.59 0 0 1-2.72 1.04A4.28 4.28 0 0 0 16.11 4c-2.37 0-4.29 1.92-4.29 4.29 0 .34.04.67.11.99C7.69 9.13 4.07 7.38 1.64 4.7c-.37.64-.58 1.38-.58 2.17 0 1.5.76 2.82 1.92 3.6-.7-.02-1.36-.21-1.94-.53v.05c0 2.1 1.5 3.85 3.5 4.25-.36.1-.74.16-1.13.16-.28 0-.54-.03-.8-.08.54 1.7 2.1 2.94 3.95 2.97A8.6 8.6 0 0 1 2 19.54c-.29 0-.57-.02-.85-.05A12.13 12.13 0 0 0 8.29 21.5c7.55 0 11.68-6.26 11.68-11.68 0-.18-.01-.36-.02-.54A8.18 8.18 0 0 0 24 4.59a8.36 8.36 0 0 1-2.54.7z"
+                  /></svg
+              ></a>
+              <a
+                href="#"
+                class="bg-blue-700 hover:bg-green-400 hover:text-blue-900 transition rounded-full p-2"
+                ><svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                  <path
+                    d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.472-.148-.67.15-.198.297-.767.967-.94 1.166-.173.198-.347.223-.644.075-.297-.149-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.447-.52.149-.174.198-.298.298-.497.099-.198.05-.372-.025-.521-.075-.149-.669-1.612-.916-2.21-.242-.58-.487-.501-.669-.511-.173-.008-.372-.01-.571-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.099 3.205 5.077 4.372.71.306 1.263.489 1.695.626.712.227 1.36.195 1.872.118.571-.085 1.758-.719 2.007-1.413.248-.694.248-1.288.173-1.413-.074-.124-.272-.198-.57-.347z"
+                  /></svg
+              ></a>
+              <a
+                href="#"
+                class="bg-blue-700 hover:bg-green-400 hover:text-blue-900 transition rounded-full p-2"
+                ><svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                  <path
+                    d="M22.23 0H1.77C.792 0 0 .771 0 1.723v20.554C0 23.229.792 24 1.77 24h20.46C23.208 24 24 23.229 24 22.277V1.723C24 .771 23.208 0 22.23 0zM7.12 20.452H3.56V9h3.56v11.452zM5.34 7.633a2.07 2.07 0 1 1 0-4.14 2.07 2.07 0 0 1 0 4.14zm15.112 12.819h-3.56v-5.605c0-1.336-.025-3.057-1.865-3.057-1.867 0-2.153 1.457-2.153 2.963v5.699h-3.56V9h3.418v1.561h.049c.476-.899 1.637-1.847 3.37-1.847 3.602 0 4.267 2.37 4.267 5.455v6.283z"
+                  /></svg
+              ></a>
+            </div>
+          </div>
         </div>
-        <div class="flex gap-4">
-          <a href="#" class="hover:text-blue-300">Facebook</a>
-          <a href="#" class="hover:text-blue-300">WhatsApp</a>
-          <a href="#" class="hover:text-blue-300">Twitter</a>
-        </div>
-        <div class="text-xs text-blue-200 mt-2 md:mt-0">
+        <div
+          class="border-t border-blue-800 mt-8 pt-4 text-center text-xs text-blue-200"
+        >
+          &copy; MopilaSanté 2024. Tous droits réservés. ·
           <a href="#" class="hover:underline">Mentions légales</a> ·
           <a href="#" class="hover:underline">Politique de confidentialité</a>
         </div>
       </footer>
     </main>
-
-    <script>
-      // Navbar background change on scroll
-      window.addEventListener("scroll", function () {
-        const navbar = document.getElementById("navbar");
-        if (window.scrollY > 40) {
-          navbar.classList.remove("bg-transparent");
-          navbar.classList.add("bg-white");
-        } else {
-          navbar.classList.add("bg-transparent");
-          navbar.classList.remove("bg-white");
-        }
-      });
-
-      // Mobile menu open/close
-      const menuBtn = document.getElementById("menu-btn");
-      const mobileMenu = document.getElementById("mobile-menu");
-      const closeMenu = document.getElementById("close-menu");
-      menuBtn.addEventListener("click", () => {
-        mobileMenu.classList.remove("hidden");
-        mobileMenu.classList.add("animate-slide-down");
-        mobileMenu.classList.remove("animate-slide-up");
-      });
-      closeMenu.addEventListener("click", () => {
-        mobileMenu.classList.remove("animate-slide-down");
-        mobileMenu.classList.add("animate-slide-up");
-        setTimeout(() => {
-          mobileMenu.classList.add("hidden");
-          mobileMenu.classList.remove("animate-slide-up");
-        }, 500);
-      });
-
-      // Fermer le menu mobile au clic sur un lien
-      document.querySelectorAll("#mobile-menu .nav-link").forEach((link) => {
-        link.addEventListener("click", () => {
-          mobileMenu.classList.remove("animate-slide-down");
-          mobileMenu.classList.add("animate-slide-up");
-          setTimeout(() => {
-            mobileMenu.classList.add("hidden");
-            mobileMenu.classList.remove("animate-slide-up");
-          }, 500);
-        });
-      });
-      // Scroll smooth pour tous les liens nav-link
-      document.querySelectorAll(".nav-link").forEach((link) => {
-        link.addEventListener("click", function (e) {
-          const href = this.getAttribute("href");
-          if (href && href.startsWith("#")) {
-            e.preventDefault();
-            const target = document.querySelector(href);
-            if (target) {
-              window.scrollTo({
-                top: target.offsetTop - 70,
-                behavior: "smooth",
-              });
-            }
-          }
-        });
-      });
-    </script>
+    <script src="js/main.js"></script>
   </body>
 </html>

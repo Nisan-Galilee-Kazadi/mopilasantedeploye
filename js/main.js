@@ -286,3 +286,64 @@ function changeNavbarTheme() {
     });
   }
 }
+
+// Navbar background change on scroll
+window.addEventListener("scroll", function () {
+  const navbar = document.getElementById("navbar");
+  if (window.scrollY > 40) {
+    navbar.classList.remove("bg-transparent");
+    navbar.classList.add("bg-white");
+  } else {
+    navbar.classList.add("bg-transparent");
+    navbar.classList.remove("bg-white");
+  }
+});
+
+// Mobile menu open/close
+const menuBtn = document.getElementById("menu-btn");
+const mobileMenu = document.getElementById("mobile-menu");
+const closeMenu = document.getElementById("close-menu");
+if (menuBtn && mobileMenu && closeMenu) {
+  menuBtn.addEventListener("click", () => {
+    mobileMenu.classList.remove("hidden");
+    mobileMenu.classList.add("animate-slide-down");
+    mobileMenu.classList.remove("animate-slide-up");
+  });
+  closeMenu.addEventListener("click", () => {
+    mobileMenu.classList.remove("animate-slide-down");
+    mobileMenu.classList.add("animate-slide-up");
+    setTimeout(() => {
+      mobileMenu.classList.add("hidden");
+      mobileMenu.classList.remove("animate-slide-up");
+    }, 500);
+  });
+  // Fermer le menu mobile au clic sur un lien
+  document.querySelectorAll("#mobile-menu .nav-link").forEach((link) => {
+    link.addEventListener("click", () => {
+      mobileMenu.classList.remove("animate-slide-down");
+      mobileMenu.classList.add("animate-slide-up");
+      setTimeout(() => {
+        mobileMenu.classList.add("hidden");
+        mobileMenu.classList.remove("animate-slide-up");
+      }, 500);
+    });
+  });
+}
+// Scroll smooth pour tous les liens nav-link
+if (typeof window !== "undefined") {
+  document.querySelectorAll(".nav-link").forEach((link) => {
+    link.addEventListener("click", function (e) {
+      const href = this.getAttribute("href");
+      if (href && href.startsWith("#")) {
+        e.preventDefault();
+        const target = document.querySelector(href);
+        if (target) {
+          window.scrollTo({
+            top: target.offsetTop - 70,
+            behavior: "smooth",
+          });
+        }
+      }
+    });
+  });
+}
