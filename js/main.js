@@ -347,3 +347,9 @@ if (typeof window !== "undefined") {
     });
   });
 }
+
+// Ajout dynamique de l'année dans le footer
+const yearSpan = document.getElementById("footer-year");
+if (yearSpan) {
+  yearSpan.textContent = new Date().getFullYear();
+}
