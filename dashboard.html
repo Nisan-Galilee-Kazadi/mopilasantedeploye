@@ -20,7 +20,7 @@
           135deg,
           rgba(0, 32, 96, 0.173),
           rgba(14, 232, 152, 0.791),
-          rgba(0, 149, 199, 0.7)
+          rgba(0, 149, 199, 0.7) s
         );
       }
       .glass {
@@ -149,63 +149,75 @@
     >
       <div
         id="mobileMenuContent"
-        class="w-[80vw] max-w-sm bg-gradient-to-b from-blue-900 via-cyan-400 to-blue-400 bg-opacity-80 backdrop-blur-lg h-full shadow-2xl p-6 flex flex-col gap-6 transform -translate-x-full transition-transform duration-500"
+        class="w-[80vw] max-w-sm bg-gradient-to-br from-blue-900 via-green-400 to-blue-700 h-full shadow-2xl p-8 flex flex-col gap-8 transform -translate-x-full transition-transform duration-500 rounded-r-3xl relative overflow-hidden"
       >
+        <!-- Logo filigrane en fond -->
+        <div
+          class="absolute inset-0 flex items-center justify-center pointer-events-none"
+        >
+          <img
+            src="images/union.jpg"
+            alt="Logo filigrane"
+            class="w-52 h-52 opacity-10 object-contain"
+          />
+        </div>
+        <!-- Bouton fermeture -->
         <button
           id="closeBtn"
-          class="self-end text-white text-2xl mb-6 focus:outline-none"
+          class="absolute top-4 right-6 text-3xl text-white z-10 focus:outline-none"
+          aria-label="Fermer le menu"
         >
           <i class="fa-solid fa-xmark"></i>
         </button>
-        <!-- Logo et nom entreprise -->
-        <div class="flex flex-col items-center mb-6 mt-2">
+        <!-- Logo et nom -->
+        <div class="flex flex-col items-center z-10 mt-2 mb-2">
           <img
             src="images/union.jpg"
             alt="Logo"
             class="h-16 w-16 rounded-full border-2 border-green-400 shadow mb-2"
           />
-          <span class="font-bold text-lg tracking-wide text-white drop-shadow"
+          <span class="font-bold text-xl tracking-wide text-white drop-shadow"
             >MopilaSanté</span
           >
         </div>
-
-        <nav class="flex flex-col gap-6">
+        <!-- Navigation -->
+        <nav class="flex flex-col gap-4 z-10 mt-4">
           <button
             data-tab="accueil"
-            class="sidebar-btn flex items-center gap-3 w-full px-3 py-2 rounded-lg font-semibold transition focus:outline-none"
+            class="flex items-center gap-3 text-white text-xl font-semibold px-2 py-2 rounded-lg transition focus:outline-none"
           >
             <i class="fa-solid fa-home"></i> Accueil
           </button>
           <button
             data-tab="paiement"
-            class="sidebar-btn flex items-center gap-3 w-full px-3 py-2 rounded-lg font-semibold transition focus:outline-none"
+            class="flex items-center gap-3 text-white text-xl font-semibold px-2 py-2 rounded-lg transition focus:outline-none"
           >
             <i class="fa-solid fa-wallet"></i> Paiement
           </button>
           <button
             data-tab="bon"
-            class="sidebar-btn flex items-center gap-3 w-full px-3 py-2 rounded-lg font-semibold transition focus:outline-none"
+            class="flex items-center gap-3 text-white text-xl font-semibold px-2 py-2 rounded-lg transition focus:outline-none"
           >
             <i class="fa-solid fa-file-medical"></i> Bon médical
           </button>
           <button
             data-tab="horsforfait"
-            class="sidebar-btn flex items-center gap-3 w-full px-3 py-2 rounded-lg font-semibold transition focus:outline-none"
+            class="flex items-center gap-3 text-white text-xl font-semibold px-2 py-2 rounded-lg transition focus:outline-none"
           >
             <i class="fa-solid fa-notes-medical"></i> Hors forfaits
           </button>
           <button
             data-tab="profil"
-            class="sidebar-btn flex items-center gap-3 w-full px-3 py-2 rounded-lg font-semibold transition focus:outline-none"
+            class="flex items-center gap-3 text-white text-xl font-semibold px-2 py-2 rounded-lg transition focus:outline-none"
           >
             <i class="fa-solid fa-user"></i> Profil
           </button>
         </nav>
         <a
           href="login.html"
-          class="flex items-center gap-3 w-full px-3 py-3 rounded-lg bg-blue-700 text-white font-bold text-1xl mt-auto shadow hover:bg-blue-800 transition"
+          class="mt-auto border-2 border-white text-white px-4 py-2 rounded hover:bg-white hover:text-blue-700 transition font-bold text-lg z-10 flex items-center justify-center gap-2"
         >
-          <i class="fa-solid fa-sign-out text-1xl"></i> Déconnexion
+          <i class="fa-solid fa-sign-out"></i> Déconnexion
         </a>
       </div>
     </div>
@@ -250,7 +262,7 @@
       <!-- Tabs -->
       <div
         id="dashboard-tabs"
-        class="hidden md:flex gap-2 px-6 pt-6 pb-2 border-b border-blue-100 bg-white bg-opacity-70"
+        class="hidden md:flex gap-2 px-6 pt-6 pb-2 border-b border-blue-100 bg-gradient-to-r from-cyan-400 to-blue-500 bg-opacity-90"
       >
         <button
           data-tab="accueil"
@@ -416,7 +428,7 @@
                   <button
                     class="flex-1 bg-blue-100 text-blue-700 font-bold py-2 rounded-lg flex items-center justify-center gap-2 border-2 border-blue-400"
                   >
-                    <i class="fa-solid fa-mobile-alt"></i> Mobile Money
+                    <i class="fa-solid fa-mobile-alt"></i> Mobile
                   </button>
                   <button
                     class="flex-1 bg-blue-100 text-blue-700 font-bold py-2 rounded-lg flex items-center justify-center gap-2 border-2 border-blue-400"
@@ -748,7 +760,7 @@
                 required
               >
                 <option value="">Choisir un mode</option>
-                <option value="mobile">Mobile Money</option>
+                <option value="mobile">Mobile</option>
                 <option value="banque">Banque</option>
                 <option value="cash">Espèces</option>
               </select>
