@@ -75,23 +75,58 @@
       <!-- Desktop menu -->
       <ul class="hidden md:flex gap-4 font-semibold">
         <li>
-          <a href="#accueil" class="hover:text-blue-600 nav-link">Accueil</a>
+          <a
+            href="#accueil"
+            class="nav-link nav-desktop-link text-white hover:text-blue-600"
+            >Accueil</a
+          >
         </li>
         <li>
-          <a href="#apropos" class="hover:text-blue-600 nav-link">À propos</a>
+          <a
+            href="#apropos"
+            class="nav-link nav-desktop-link text-white hover:text-blue-600"
+            >À propos</a
+          >
         </li>
         <li>
-          <a href="#stats" class="hover:text-blue-600 nav-link">Statistiques</a>
+          <a
+            href="#valeurs"
+            class="nav-link nav-desktop-link text-white hover:text-blue-600"
+            >Nos valeurs</a
+          >
         </li>
         <li>
-          <a href="#partenaires" class="hover:text-blue-600 nav-link"
+          <a
+            href="#stats"
+            class="nav-link nav-desktop-link text-white hover:text-blue-600"
+            >Statistiques</a
+          >
+        </li>
+        <li>
+          <a
+            href="#partenaires"
+            class="nav-link nav-desktop-link text-white hover:text-blue-600"
             >Partenaires</a
           >
         </li>
         <li>
           <a
+            href="#temoignages"
+            class="nav-link nav-desktop-link text-white hover:text-blue-600"
+            >Témoignages</a
+          >
+        </li>
+        <li>
+          <a
+            href="#fonctionnement"
+            class="nav-link nav-desktop-link text-white hover:text-blue-600"
+            >Comment ça marche</a
+          >
+        </li>
+        <li>
+          <a
             href="#contact"
-            class="text-blue-600 font-bold nav-link hover:underline"
+            class="nav-link nav-desktop-link text-white hover:text-blue-600 font-bold hover:underline"
             >Contact</a
           >
         </li>
@@ -116,7 +151,7 @@
       <!-- Mobile menu -->
       <div
         id="mobile-menu"
-        class="fixed top-0 left-0 w-full h-full bg-white bg-opacity-95 z-50 flex flex-col items-center justify-center gap-8 text-xl font-semibold hidden md:hidden rounded-b-3xl shadow-2xl animate-slide-down overflow-hidden"
+        class="fixed top-0 left-0 w-full h-full bg-gradient-to-br from-blue-900 via-green-400 to-blue-700 z-50 flex flex-col items-center justify-center gap-8 text-xl font-semibold hidden md:hidden rounded-b-3xl shadow-2xl animate-slide-down overflow-hidden"
       >
         <div
           class="absolute inset-0 flex items-center justify-center pointer-events-none"
@@ -129,22 +164,38 @@
         </div>
         <button
           id="close-menu"
-          class="absolute top-4 right-6 text-3xl text-blue-700"
+          class="absolute top-4 right-6 text-3xl text-white"
+          aria-label="Fermer le menu"
         >
-          &times;
+          <i class="fa-solid fa-xmark fa-1x"></i>
         </button>
-        <a href="#accueil" class="nav-link relative z-10">Accueil</a>
-        <a href="#apropos" class="nav-link relative z-10">À propos</a>
-        <a href="#stats" class="nav-link relative z-10">Statistiques</a>
-        <a href="#partenaires" class="nav-link relative z-10">Partenaires</a>
-        <a
-          href="#contact"
-          class="nav-link relative z-10 text-blue-600 font-bold hover:underline"
+
+        <!-- toutt les li doivent avoir la couleur bleu -->
+        <a href="#accueil" class="nav-link relative z-10 text-white">Accueil</a>
+        <a href="#apropos" class="nav-link relative z-10 text-white"
+          >À propos</a
+        >
+        <a href="#valeurs" class="nav-link relative z-10 text-white"
+          >Nos valeurs</a
+        >
+        <a href="#stats" class="nav-link relative z-10 text-white"
+          >Statistiques</a
+        >
+        <a href="#partenaires" class="nav-link relative z-10 text-white"
+          >Partenaires</a
+        >
+        <a href="#temoignages" class="nav-link relative z-10 text-white"
+          >Témoignages</a
+        >
+        <a href="#fonctionnement" class="nav-link relative z-10 text-white"
+          >Comment ça marche</a
+        >
+        <a href="#contact" class="nav-link relative z-10 text-white font-bold"
           >Contact</a
         >
         <button
-          onclick="location.href='#login'"
-          class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition relative z-10"
+          onclick="location.href='login.html'"
+          class="border-2 border-white text-white px-4 py-2 rounded hover:bg-white hover:text-blue-700 transition relative z-10"
         >
           Connexion
         </button>
@@ -747,7 +798,7 @@
           class="border-t border-blue-800 mt-8 pt-4 text-center text-xs text-blue-200"
         >
           &copy; MopilaSanté <span id="footer-year">2024</span> par
-          <span class="font-bold text-blue-600"
+          <span class="font-bold text-blue-700"
             ><a href="https://galileokazadidev.netlify.app"
               >Nisan-Galilée Kazadi</a
             ></span

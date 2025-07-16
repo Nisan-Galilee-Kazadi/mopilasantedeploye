@@ -353,3 +353,27 @@ const yearSpan = document.getElementById("footer-year");
 if (yearSpan) {
   yearSpan.textContent = new Date().getFullYear();
 }
+
+// Inversion dynamique des couleurs des liens de la navbar desktop
+function updateNavbarLinkColors() {
+  const navbar = document.getElementById("navbar");
+  const links = document.querySelectorAll(".nav-desktop-link");
+  if (!navbar || !links.length) return;
+  if (navbar.classList.contains("bg-white")) {
+    links.forEach((link) => {
+      link.classList.remove("text-white", "hover:text-blue-600");
+      link.classList.add("text-blue-700", "hover:text-blue-400");
+    });
+  } else {
+    links.forEach((link) => {
+      link.classList.remove("text-blue-700", "hover:text-white");
+      link.classList.add("text-white", "hover:text-blue-600");
+    });
+  }
+}
+window.addEventListener("scroll", function () {
+  updateNavbarLinkColors();
+});
+document.addEventListener("DOMContentLoaded", function () {
+  updateNavbarLinkColors();
+});
