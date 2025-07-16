@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin - MopilaSanté</title>
+    <meta
+      name="description"
+      content="Espace d'administration MopilaSanté : supervision des membres, paiements, partenaires et opérations."
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+    <style>
+      .sidebar-mini {
+        width: 72px;
+        transition: width 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        height: 100vh;
+        margin-right: 40px;
+      }
+      .sidebar-mini:hover,
+      .sidebar-mini:focus-within {
+        width: 240px;
+      }
+      .sidebar-mini .sidebar-label {
+        opacity: 0;
+        transition: opacity 0.2s;
+        white-space: nowrap;
+      }
+      .sidebar-mini:hover .sidebar-label,
+      .sidebar-mini:focus-within .sidebar-label {
+        opacity: 1;
+      }
+      @media (max-width: 767px) {
+        .sidebar-mini {
+          width: 0;
+          position: fixed;
+          left: 0;
+          top: 0;
+          height: 100vh;
+          z-index: 50;
+          background: linear-gradient(to bottom, #1e3a8a, #06b6d4);
+          overflow: hidden;
+        }
+        .sidebar-mini.open {
+          width: 240px;
+        }
+      }
+    </style>
+  </head>
+  <body class="bg-blue-50 min-h-screen font-sans">
+    <div class="flex min-h-screen">
+      <!-- Sidebar partielle -->
+      <aside
+        id="sidebar"
+        class="sidebar-mini bg-gradient-to-b from-blue-900 to-cyan-500 shadow-lg flex flex-col py-6 px-2 fixed md:relative h-full z-40"
+      >
+        <div class="flex flex-col items-center md:items-start gap-8">
+          <img
+            src="images/union.jpg"
+            alt="Logo MopilaSanté"
+            class="h-10 w-10 rounded-full border-2 border-cyan-400 shadow mb-2"
+          />
+        </div>
+        <nav class="flex flex-col gap-2 mt-10">
+          <button
+            class="sidebar-link flex items-center gap-4 px-3 py-3 rounded-lg text-white hover:bg-cyan-600 transition"
+            data-section="dashboard"
+          >
+            <i class="fas fa-tachometer-alt text-xl"></i>
+            <span class="sidebar-label font-semibold">Accueil</span>
+          </button>
+          <button
+            class="sidebar-link flex items-center gap-4 px-3 py-3 rounded-lg text-white hover:bg-cyan-600 transition"
+            data-section="membres"
+          >
+            <i class="fas fa-users text-xl"></i>
+            <span class="sidebar-label font-semibold">Membres</span>
+          </button>
+          <button
+            class="sidebar-link flex items-center gap-4 px-3 py-3 rounded-lg text-white hover:bg-cyan-600 transition"
+            data-section="hopitaux"
+          >
+            <i class="fas fa-hospital text-xl"></i>
+            <span class="sidebar-label font-semibold">Hôpitaux</span>
+          </button>
+          <button
+            class="sidebar-link flex items-center gap-4 px-3 py-3 rounded-lg text-white hover:bg-cyan-600 transition"
+            data-section="bons"
+          >
+            <i class="fas fa-file-medical text-xl"></i>
+            <span class="sidebar-label font-semibold">Bons</span>
+          </button>
+          <button
+            class="sidebar-link flex items-center gap-4 px-3 py-3 rounded-lg text-white hover:bg-cyan-600 transition"
+            data-section="paiements"
+          >
+            <i class="fas fa-wallet text-xl"></i>
+            <span class="sidebar-label font-semibold">Paiements</span>
+          </button>
+          <button
+            class="sidebar-link flex items-center gap-4 px-3 py-3 rounded-lg text-white hover:bg-cyan-600 transition"
+            data-section="situation"
+          >
+            <i class="fas fa-balance-scale text-xl"></i>
+            <span class="sidebar-label font-semibold">Situation</span>
+          </button>
+          <button
+            class="sidebar-link flex items-center gap-4 px-3 py-3 rounded-lg text-white hover:bg-cyan-600 transition"
+            data-section="historique"
+          >
+            <i class="fas fa-history text-xl"></i>
+            <span class="sidebar-label font-semibold">Historique</span>
+          </button>
+        </nav>
+        <div class="mt-auto flex flex-col items-center md:items-start">
+          <a
+            href="login.html"
+            class="flex items-center gap-4 px-3 py-3 rounded-lg text-white hover:bg-red-400 transition mt-8"
+          >
+            <i class="fas fa-sign-out-alt text-xl text-[#faf]"></i>
+            <span class="sidebar-label font-semibold">Déconnexion</span>
+          </a>
+        </div>
+      </aside>
+      <!-- Main content -->
+      <div class="flex-1 flex flex-col min-h-screen md:ml-[72px]">
+        <!-- Header -->
+        <header
+          class="flex items-center justify-between bg-white shadow -ml-14 px-6 py-4 sticky top-0 z-30"
+        >
+          <div class="flex items-center gap-4">
+            <button
+              id="sidebarToggle"
+              class="md:hidden text-blue-700 text-2xl focus:outline-none"
+            >
+              <i class="fas fa-bars"></i>
+            </button>
+            <h1 class="text-2xl font-bold text-blue-800">Tableau de bord</h1>
+          </div>
+          <div class="flex items-center gap-4">
+            <div class="relative">
+              <input
+                type="text"
+                placeholder="Recherche..."
+                class="rounded-full border border-cyan-200 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-cyan-400 text-blue-900"
+              />
+              <i
+                class="fas fa-search absolute right-3 top-1/2 -translate-y-1/2 text-cyan-400"
+              ></i>
+            </div>
+            <button class="relative">
+              <i class="fas fa-bell text-xl text-cyan-400"></i>
+              <span
+                class="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full px-1"
+                >3</span
+              >
+            </button>
+            <div class="flex items-center gap-2">
+              <img
+                src="images/union.jpg"
+                alt="Profil"
+                class="h-8 w-8 rounded-full border-2 border-cyan-400"
+              />
+              <span class="hidden md:inline text-blue-800 font-semibold"
+                >Admin</span
+              >
+            </div>
+          </div>
+        </header>
+        <main class="max-w-7xl mx-auto w-full px-4 py-8">
+          <!-- Dashboard général -->
+          <section id="section-dashboard">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-10">
+              <div
+                class="bg-white rounded-2xl shadow-xl p-6 flex flex-col items-center"
+              >
+                <span class="text-4xl font-extrabold text-cyan-400">1 250</span>
+                <p class="text-blue-800 mt-2 font-semibold text-center">
+                  Membres
+                </p>
+              </div>
+              <div
+                class="bg-white rounded-2xl shadow-xl p-6 flex flex-col items-center"
+              >
+                <span class="text-4xl font-extrabold text-cyan-400">8</span>
+                <p class="text-blue-800 mt-2 font-semibold text-center">
+                  Partenaires
+                </p>
+              </div>
+              <div
+                class="bg-white rounded-2xl shadow-xl p-6 flex flex-col items-center"
+              >
+                <span class="text-4xl font-extrabold text-cyan-400">12</span>
+                <p class="text-blue-800 mt-2 font-semibold text-center">
+                  Bons en attente
+                </p>
+              </div>
+              <div
+                class="bg-white rounded-2xl shadow-xl p-6 flex flex-col items-center"
+              >
+                <span class="text-4xl font-extrabold text-cyan-400">3</span>
+                <p class="text-blue-800 mt-2 font-semibold text-center">
+                  Hors forfait
+                </p>
+              </div>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+              <div
+                class="bg-gradient-to-br from-cyan-100 to-blue-50 rounded-2xl shadow p-6"
+              >
+                <h3 class="text-xl font-bold text-blue-800 mb-4">
+                  Prochains paiements
+                </h3>
+                <ul class="space-y-2">
+                  <li class="flex justify-between text-blue-700">
+                    <span>Jean Mopila</span>
+                    <span>1 000 FCFA</span>
+                  </li>
+                  <li class="flex justify-between text-blue-700">
+                    <span>Marie Kasa</span>
+                    <span>1 000 FCFA</span>
+                  </li>
+                </ul>
+              </div>
+              <div
+                class="bg-gradient-to-br from-blue-100 to-cyan-50 rounded-2xl shadow p-6"
+              >
+                <h3 class="text-xl font-bold text-blue-800 mb-4">
+                  Activités récentes
+                </h3>
+                <ul class="space-y-2">
+                  <li class="flex justify-between text-blue-700">
+                    <span>Paiement reçu</span>
+                    <span>15/07/2025</span>
+                  </li>
+                  <li class="flex justify-between text-blue-700">
+                    <span>Bon validé</span>
+                    <span>14/07/2025</span>
+                  </li>
+                </ul>
+              </div>
+              <div
+                class="bg-gradient-to-br from-cyan-50 to-blue-50 rounded-2xl shadow p-6"
+              >
+                <h3 class="text-xl font-bold text-blue-800 mb-4">
+                  Tâches en attente
+                </h3>
+                <ul class="space-y-2">
+                  <li class="flex justify-between text-blue-700">
+                    <span>Valider bon</span>
+                    <span>Jean Mopila</span>
+                  </li>
+                  <li class="flex justify-between text-blue-700">
+                    <span>Enregistrer hors forfait</span>
+                    <span>Marie Kasa</span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </section>
+          <!-- Membres -->
+          <section id="section-membres" class="hidden">
+            <h2 class="text-2xl font-bold text-blue-800 mb-6">
+              Liste des membres
+            </h2>
+            <div class="overflow-x-auto">
+              <table class="min-w-full bg-white rounded-2xl shadow-xl">
+                <thead>
+                  <tr class="bg-cyan-100 text-blue-800">
+                    <th class="py-3 px-4">Nom</th>
+                    <th>Matricule</th>
+                    <th>Téléphone</th>
+                    <th>Paiements</th>
+                    <th>Historique soins</th>
+                    <th>Hors forfaits</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr class="border-b">
+                    <td class="py-2 px-4">Jean Mopila</td>
+                    <td>MP-2024-001</td>
+                    <td>+243 800 000 000</td>
+                    <td>À jour</td>
+                    <td>2 visites</td>
+                    <td>1</td>
+                  </tr>
+                  <tr>
+                    <td class="py-2 px-4">Marie Kasa</td>
+                    <td>MP-2024-002</td>
+                    <td>+243 811 111 111</td>
+                    <td>En retard</td>
+                    <td>1 visite</td>
+                    <td>0</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+          <!-- Hôpitaux partenaires -->
+          <section id="section-hopitaux" class="hidden">
+            <h2 class="text-2xl font-bold text-blue-800 mb-6">
+              Hôpitaux partenaires
+            </h2>
+            <div class="overflow-x-auto">
+              <table class="min-w-full bg-white rounded-2xl shadow-xl">
+                <thead>
+                  <tr class="bg-cyan-100 text-blue-800">
+                    <th class="py-3 px-4">Nom</th>
+                    <th>Localisation</th>
+                    <th>Patients envoyés</th>
+                    <th>Hors forfaits</th>
+                    <th>Paiements reçus</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr class="border-b">
+                    <td class="py-2 px-4">Hôpital du Cinquantenaire</td>
+                    <td>Kinshasa</td>
+                    <td>12</td>
+                    <td>2</td>
+                    <td>1 200 000 FCFA</td>
+                  </tr>
+                  <tr>
+                    <td class="py-2 px-4">Clinique Mopila</td>
+                    <td>Kinshasa</td>
+                    <td>8</td>
+                    <td>1</td>
+                    <td>800 000 FCFA</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+          <!-- Validation des bons -->
+          <section id="section-bons" class="hidden">
+            <h2 class="text-2xl font-bold text-blue-800 mb-6">
+              Validation des bons médicaux
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+              <div
+                class="bg-white rounded-2xl shadow-xl p-6 flex flex-col gap-2"
+              >
+                <div class="flex justify-between items-center">
+                  <span class="font-semibold text-blue-700">Jean Mopila</span>
+                  <span class="text-cyan-500">12/07/2025</span>
+                </div>
+                <p class="text-blue-800">Problème : Consultation générale</p>
+                <p class="text-blue-800">Centre : Clinique Mopila</p>
+                <div class="flex gap-2 mt-2">
+                  <button
+                    class="bg-green-500 text-white px-4 py-2 rounded-full font-semibold hover:bg-green-400 transition"
+                  >
+                    Approuver
+                  </button>
+                  <button
+                    class="bg-red-500 text-white px-4 py-2 rounded-full font-semibold hover:bg-red-400 transition"
+                  >
+                    Refuser
+                  </button>
+                </div>
+              </div>
+              <div
+                class="bg-white rounded-2xl shadow-xl p-6 flex flex-col gap-2"
+              >
+                <div class="flex justify-between items-center">
+                  <span class="font-semibold text-blue-700">Marie Kasa</span>
+                  <span class="text-cyan-500">13/07/2025</span>
+                </div>
+                <p class="text-blue-800">Problème : Radio</p>
+                <p class="text-blue-800">Centre : Hôpital du Cinquantenaire</p>
+                <div class="flex gap-2 mt-2">
+                  <button
+                    class="bg-green-500 text-white px-4 py-2 rounded-full font-semibold hover:bg-green-400 transition"
+                  >
+                    Approuver
+                  </button>
+                  <button
+                    class="bg-red-500 text-white px-4 py-2 rounded-full font-semibold hover:bg-red-400 transition"
+                  >
+                    Refuser
+                  </button>
+                </div>
+              </div>
+            </div>
+          </section>
+          <!-- Hors forfaits -->
+          <section id="section-horsforfait" class="hidden">
+            <h2 class="text-2xl font-bold text-blue-800 mb-6">
+              Enregistrer un soin hors forfait
+            </h2>
+            <form
+              class="bg-white rounded-2xl shadow-xl p-6 flex flex-col gap-4 mb-8"
+            >
+              <input
+                type="text"
+                placeholder="Nom du membre"
+                class="border border-cyan-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-400 text-blue-900"
+                required
+              />
+              <input
+                type="datetime-local"
+                class="border border-cyan-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-400 text-blue-900"
+                required
+              />
+              <input
+                type="text"
+                placeholder="Lieu"
+                class="border border-cyan-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-400 text-blue-900"
+                required
+              />
+              <input
+                type="text"
+                placeholder="Motif"
+                class="border border-cyan-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-400 text-blue-900"
+                required
+              />
+              <input
+                type="number"
+                placeholder="Montant"
+                class="border border-cyan-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-400 text-blue-900"
+                required
+              />
+              <button
+                type="submit"
+                class="bg-blue-500 text-white px-8 py-3 rounded-full font-bold text-lg hover:bg-blue-400 transition"
+              >
+                Enregistrer
+              </button>
+            </form>
+            <h3 class="text-xl font-bold text-blue-800 mb-4">
+              Suivi des hors forfaits
+            </h3>
+            <div class="overflow-x-auto">
+              <table class="min-w-full bg-white rounded-2xl shadow-xl">
+                <thead>
+                  <tr class="bg-cyan-100 text-blue-800">
+                    <th class="py-3 px-4">Nom</th>
+                    <th>Date</th>
+                    <th>Lieu</th>
+                    <th>Motif</th>
+                    <th>Montant</th>
+                    <th>Statut paiement</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr class="border-b">
+                    <td class="py-2 px-4">Jean Mopila</td>
+                    <td>10/07/2025 10:00</td>
+                    <td>Clinique Mopila</td>
+                    <td>Radio</td>
+                    <td>20 000 FCFA</td>
+                    <td>
+                      <span
+                        class="bg-yellow-200 text-yellow-800 px-3 py-1 rounded-full text-sm"
+                        >50% payé</span
+                      >
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+          <!-- Paiements -->
+          <section id="section-paiements" class="hidden">
+            <h2 class="text-2xl font-bold text-blue-800 mb-6">Paiements</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+              <div>
+                <h3 class="text-lg font-semibold text-blue-700 mb-2">
+                  Reçus des membres
+                </h3>
+                <ul class="bg-white rounded-2xl shadow-xl p-6 space-y-2">
+                  <li class="flex justify-between text-blue-700">
+                    <span>Jean Mopila</span><span>1 000 FCFA</span>
+                  </li>
+                  <li class="flex justify-between text-blue-700">
+                    <span>Marie Kasa</span><span>1 000 FCFA</span>
+                  </li>
+                </ul>
+              </div>
+              <div>
+                <h3 class="text-lg font-semibold text-blue-700 mb-2">
+                  Versés aux centres
+                </h3>
+                <ul class="bg-white rounded-2xl shadow-xl p-6 space-y-2">
+                  <li class="flex justify-between text-blue-700">
+                    <span>Clinique Mopila</span><span>800 000 FCFA</span>
+                  </li>
+                  <li class="flex justify-between text-blue-700">
+                    <span>Hôpital du Cinquantenaire</span
+                    ><span>1 200 000 FCFA</span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </section>
+          <!-- Situation active -->
+          <section id="section-situation" class="hidden">
+            <h2 class="text-2xl font-bold text-blue-800 mb-6">
+              Situation active de la caisse
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+              <div
+                class="bg-white rounded-2xl shadow-xl p-6 flex flex-col items-center"
+              >
+                <span class="text-3xl font-extrabold text-cyan-400"
+                  >2 000 000 FCFA</span
+                >
+                <p class="text-blue-800 mt-2 font-semibold text-center">
+                  Cotisations reçues
+                </p>
+              </div>
+              <div
+                class="bg-white rounded-2xl shadow-xl p-6 flex flex-col items-center"
+              >
+                <span class="text-3xl font-extrabold text-cyan-400"
+                  >1 500 000 FCFA</span
+                >
+                <p class="text-blue-800 mt-2 font-semibold text-center">
+                  Dépenses réalisées
+                </p>
+              </div>
+              <div
+                class="bg-white rounded-2xl shadow-xl p-6 flex flex-col items-center"
+              >
+                <span class="text-3xl font-extrabold text-cyan-400"
+                  >500 000 FCFA</span
+                >
+                <p class="text-blue-800 mt-2 font-semibold text-center">
+                  Solde disponible
+                </p>
+              </div>
+            </div>
+            <div class="mt-8">
+              <p class="text-blue-700 font-semibold">
+                Alerte : Solde inférieur au seuil de sécurité !
+              </p>
+            </div>
+          </section>
+          <!-- Historique des opérations -->
+          <section id="section-historique" class="hidden">
+            <h2 class="text-2xl font-bold text-blue-800 mb-6">
+              Historique des opérations
+            </h2>
+            <div class="overflow-x-auto">
+              <table class="min-w-full bg-white rounded-2xl shadow-xl">
+                <thead>
+                  <tr class="bg-cyan-100 text-blue-800">
+                    <th class="py-3 px-4">Date</th>
+                    <th>Action</th>
+                    <th>Utilisateur</th>
+                    <th>Détail</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr class="border-b">
+                    <td class="py-2 px-4">15/07/2025</td>
+                    <td>Paiement reçu</td>
+                    <td>Jean Mopila</td>
+                    <td>1 000 FCFA</td>
+                  </tr>
+                  <tr>
+                    <td class="py-2 px-4">14/07/2025</td>
+                    <td>Bon validé</td>
+                    <td>Marie Kasa</td>
+                    <td>Radio - Hôpital du Cinquantenaire</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+        </main>
+      </div>
+    </div>
+    <script>
+      // Sidebar drawer mobile
+      const sidebar = document.getElementById("sidebar");
+      const sidebarToggle = document.getElementById("sidebarToggle");
+      function openSidebar() {
+        sidebar.classList.add("open");
+      }
+      function closeSidebar() {
+        sidebar.classList.remove("open");
+      }
+      if (sidebarToggle) {
+        sidebarToggle.addEventListener("click", openSidebar);
+        document.body.addEventListener("click", function (e) {
+          if (
+            e.target !== sidebar &&
+            !sidebar.contains(e.target) &&
+            e.target !== sidebarToggle
+          ) {
+            closeSidebar();
+          }
+        });
+      }
+      // Affichage dynamique des sections
+      const sections = [
+        "dashboard",
+        "membres",
+        "hopitaux",
+        "bons",
+        "horsforfait",
+        "paiements",
+        "situation",
+        "historique",
+      ];
+      document.querySelectorAll(".sidebar-link").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          const section = btn.getAttribute("data-section");
+          sections.forEach((s) => {
+            const el = document.getElementById("section-" + s);
+            if (el) el.classList.toggle("hidden", s !== section);
+          });
+        });
+      });
+      // Par défaut, afficher dashboard
+      sections.forEach((s) => {
+        const el = document.getElementById("section-" + s);
+        if (el) el.classList.toggle("hidden", s !== "dashboard");
+      });
+    </script>
+  </body>
+</html>

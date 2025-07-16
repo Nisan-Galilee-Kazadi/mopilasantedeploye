@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+      MopilaSanté - Solidarité & Santé pour les Chauffeurs de Kinshasa
+    </title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      .hero-overlay {
+        background: linear-gradient(
+          135deg,
+          rgba(0, 32, 96, 0.173),
+          rgba(14, 232, 152, 0.791),
+          rgba(0, 149, 199, 0.7)
+        );
+      }
+      @keyframes slideDown {
+        0% {
+          transform: translateY(-100%);
+          opacity: 0;
+        }
+        100% {
+          transform: translateY(0);
+          opacity: 1;
+        }
+      }
+      @keyframes slideUp {
+        0% {
+          transform: translateY(0);
+          opacity: 1;
+        }
+        100% {
+          transform: translateY(-100%);
+          opacity: 0;
+        }
+      }
+      .animate-slide-down {
+        animation: slideDown 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+      .animate-slide-up {
+        animation: slideUp 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+    </style>
+  </head>
+  <body class="bg-gray-50 text-gray-900">
+    <!-- Navbar -->
+    <nav
+      id="navbar"
+      class="w-full fixed top-0 left-0 bg-transparent transition-colors duration-300 shadow z-50 flex items-center justify-between px-4 py-2 md:px-8"
+    >
+      <div class="flex items-center gap-2">
+        <img
+          src="images/union.jpg"
+          alt="Logo MopilaSanté"
+          class="h-10 w-10 rounded-full bg-blue-100 object-cover"
+        />
+        <span class="font-bold text-lg text-blue-700 tracking-wide"
+          >MopilaSanté</span
+        >
+      </div>
+      <!-- Desktop menu -->
+      <ul class="hidden md:flex gap-4 font-semibold">
+        <li>
+          <a href="#accueil" class="hover:text-blue-600 nav-link">Accueil</a>
+        </li>
+        <li>
+          <a href="#apropos" class="hover:text-blue-600 nav-link">À propos</a>
+        </li>
+        <li>
+          <a href="#stats" class="hover:text-blue-600 nav-link">Statistiques</a>
+        </li>
+        <li>
+          <a href="#partenaires" class="hover:text-blue-600 nav-link"
+            >Partenaires</a
+          >
+        </li>
+        <li>
+          <a
+            href="#contact"
+            class="text-blue-600 font-bold nav-link hover:underline"
+            >Contact</a
+          >
+        </li>
+      </ul>
+      <div class="flex items-center gap-2 w-32 justify-center md:w-auto">
+        <!-- Connexion CTA toujours visible et centré sur mobile -->
+        <button
+          onclick="location.href='#login'"
+          class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition md:inline-block flex-1 text-center"
+        >
+          Connexion
+        </button>
+        <!-- Hamburger button for mobile -->
+        <button
+          id="menu-btn"
+          class="md:hidden flex flex-col justify-center items-center w-10 h-10 focus:outline-none ml-2"
+          aria-label="Ouvrir le menu"
+        >
+          <span class="block w-6 h-0.5 bg-blue-700 mb-1"></span>
+          <span class="block w-6 h-0.5 bg-blue-700 mb-1"></span>
+          <span class="block w-6 h-0.5 bg-blue-700"></span>
+        </button>
+      </div>
+      <!-- Mobile menu -->
+      <div
+        id="mobile-menu"
+        class="fixed top-0 left-0 w-full h-full bg-white bg-opacity-95 z-50 flex flex-col items-center justify-center gap-8 text-xl font-semibold hidden md:hidden rounded-b-3xl shadow-2xl animate-slide-down overflow-hidden"
+      >
+        <div
+          class="absolute inset-0 flex items-center justify-center pointer-events-none"
+        >
+          <img
+            src="images/union.jpg"
+            alt="Logo filigrane"
+            class="w-48 h-48 opacity-10 object-contain"
+          />
+        </div>
+        <button
+          id="close-menu"
+          class="absolute top-4 right-6 text-3xl text-blue-700"
+        >
+          &times;
+        </button>
+        <a href="#accueil" class="nav-link relative z-10">Accueil</a>
+        <a href="#apropos" class="nav-link relative z-10">À propos</a>
+        <a href="#stats" class="nav-link relative z-10">Statistiques</a>
+        <a href="#partenaires" class="nav-link relative z-10">Partenaires</a>
+        <a
+          href="#contact"
+          class="nav-link relative z-10 text-blue-600 font-bold hover:underline"
+          >Contact</a
+        >
+        <button
+          onclick="location.href='#login'"
+          class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition relative z-10"
+        >
+          Connexion
+        </button>
+      </div>
+    </nav>
+
+    <main>
+      <!-- Accueil -->
+      <section
+        id="accueil"
+        class="min-h-screen flex flex-col items-center justify-center text-center bg-cover bg-center bg-no-repeat px-4 py-12 relative"
+        style="background-image: url('images/vudel\'hopital.jpg')"
+      >
+        <div class="absolute inset-0 hero-overlay"></div>
+        <div class="relative z-10">
+          <h1 class="text-3xl md:text-5xl font-extrabold text-blue-800 mb-4">
+            MopilaSanté
+          </h1>
+          <p class="text-lg md:text-2xl text-blue-600 mb-2">
+            Solidarité & Santé pour les chauffeurs de Kinshasa
+          </p>
+          <p class="max-w-xl text-gray-700 mb-6">
+            Un système de cotisation solidaire pour garantir l'accès aux soins
+            médicaux des conducteurs indépendants (voitures & motos) de
+            Kinshasa.
+          </p>
+          <button
+            onclick="scrollToContact()"
+            class="px-6 py-3 bg-blue-600 text-white rounded-lg font-semibold shadow hover:bg-blue-700 transition"
+          >
+            Nous contacter
+          </button>
+        </div>
+      </section>
+
+      <!-- À propos -->
+      <section
+        id="apropos"
+        class="py-12 px-4 bg-white flex flex-col items-center pt-20 md:pt-24"
+      >
+        <h2 class="text-2xl font-bold text-blue-700 mb-4">À propos</h2>
+        <div class="max-w-2xl text-gray-700 space-y-3">
+          <p>
+            <strong>MopilaSanté</strong> est une solution numérique pour
+            accompagner les chauffeurs indépendants de Kinshasa, en leur offrant
+            un accès simplifié et structuré aux soins médicaux.
+          </p>
+          <p>
+            Chaque membre contribue régulièrement à une caisse commune, utilisée
+            pour la couverture partielle ou complète de soins médicaux dans des
+            centres partenaires.
+          </p>
+          <ul class="list-disc list-inside mt-2">
+            <li>
+              <strong>Solidarité</strong> : Unir les chauffeurs pour leur santé.
+            </li>
+            <li>
+              <strong>Transparence</strong> : Suivi clair des cotisations et des
+              soins.
+            </li>
+            <li>
+              <strong>Communauté</strong> : Un projet par et pour les
+              conducteurs.
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- Statistiques -->
+      <section
+        id="stats"
+        class="py-12 px-4 bg-blue-50 flex flex-col items-center"
+      >
+        <h2 class="text-2xl font-bold text-blue-700 mb-6">Statistiques</h2>
+        <div class="flex flex-wrap gap-8 justify-center">
+          <div
+            class="bg-white rounded shadow p-6 w-40 text-center flex flex-col items-center"
+          >
+            <img
+              src="/img/membres.png"
+              alt="Membres inscrits"
+              class="h-10 w-10 mb-2"
+            />
+            <div class="text-3xl font-bold text-blue-600">+1200</div>
+            <div class="text-gray-600">Membres inscrits</div>
+          </div>
+          <div
+            class="bg-white rounded shadow p-6 w-40 text-center flex flex-col items-center"
+          >
+            <img
+              src="/img/hopitaux.png"
+              alt="Hôpitaux partenaires"
+              class="h-10 w-10 mb-2"
+            />
+            <div class="text-3xl font-bold text-blue-600">8</div>
+            <div class="text-gray-600">Hôpitaux partenaires</div>
+          </div>
+          <div
+            class="bg-white rounded shadow p-6 w-40 text-center flex flex-col items-center"
+          >
+            <img
+              src="/img/bons.png"
+              alt="Bons de soins délivrés"
+              class="h-10 w-10 mb-2"
+            />
+            <div class="text-3xl font-bold text-blue-600">+350</div>
+            <div class="text-gray-600">Bons de soins délivrés</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Partenaires -->
+      <section
+        id="partenaires"
+        class="py-12 px-4 bg-white flex flex-col items-center"
+      >
+        <h2 class="text-2xl font-bold text-blue-700 mb-6">Nos partenaires</h2>
+        <div class="flex flex-wrap gap-8 justify-center items-center">
+          <div class="flex flex-col items-center">
+            <img
+              src="/img/hopital1.png"
+              alt="Hôpital A"
+              class="h-16 w-16 object-contain mb-2"
+            />
+            <span class="font-semibold">Hôpital A</span>
+            <span class="text-xs text-gray-500">Gombe</span>
+          </div>
+          <div class="flex flex-col items-center">
+            <img
+              src="/img/hopital2.png"
+              alt="Hôpital B"
+              class="h-16 w-16 object-contain mb-2"
+            />
+            <span class="font-semibold">Hôpital B</span>
+            <span class="text-xs text-gray-500">Limete</span>
+          </div>
+          <div class="flex flex-col items-center">
+            <img
+              src="/img/hopital3.png"
+              alt="Hôpital C"
+              class="h-16 w-16 object-contain mb-2"
+            />
+            <span class="font-semibold">Hôpital C</span>
+            <span class="text-xs text-gray-500">Matete</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Contact -->
+      <section
+        id="contact"
+        class="py-12 px-4 bg-blue-50 flex flex-col items-center"
+      >
+        <h2 class="text-2xl font-bold text-blue-700 mb-4">Contact</h2>
+        <form
+          class="w-full max-w-md bg-white rounded shadow p-6 flex flex-col gap-4"
+          autocomplete="off"
+        >
+          <input
+            type="text"
+            name="nom"
+            placeholder="Nom"
+            class="border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
+            required
+          />
+          <input
+            type="tel"
+            name="telephone"
+            placeholder="Téléphone"
+            class="border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
+            required
+          />
+          <textarea
+            name="message"
+            placeholder="Votre message"
+            rows="3"
+            class="border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
+            required
+          ></textarea>
+          <button
+            type="submit"
+            class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition"
+          >
+            Envoyer
+          </button>
+        </form>
+        <p class="text-sm text-gray-500 mt-4">
+          Ou contactez-nous au
+          <a href="tel:+243900000000" class="text-blue-700 underline"
+            >+243 900 000 000</a
+          >
+        </p>
+      </section>
+
+      <!-- Footer -->
+      <footer
+        class="bg-blue-900 text-white py-8 px-4 flex flex-col md:flex-row justify-between items-center gap-4"
+      >
+        <div class="flex flex-col gap-1">
+          <span class="font-bold">MopilaSanté</span>
+          <span>Kinshasa, RDC</span>
+          <span>Email : contact@mopilasanté.cd</span>
+        </div>
+        <div class="flex gap-4">
+          <a href="#" class="hover:text-blue-300">Facebook</a>
+          <a href="#" class="hover:text-blue-300">WhatsApp</a>
+          <a href="#" class="hover:text-blue-300">Twitter</a>
+        </div>
+        <div class="text-xs text-blue-200 mt-2 md:mt-0">
+          <a href="#" class="hover:underline">Mentions légales</a> ·
+          <a href="#" class="hover:underline">Politique de confidentialité</a>
+        </div>
+      </footer>
+    </main>
+
+    <script>
+      // Navbar background change on scroll
+      window.addEventListener("scroll", function () {
+        const navbar = document.getElementById("navbar");
+        if (window.scrollY > 40) {
+          navbar.classList.remove("bg-transparent");
+          navbar.classList.add("bg-white");
+        } else {
+          navbar.classList.add("bg-transparent");
+          navbar.classList.remove("bg-white");
+        }
+      });
+
+      // Mobile menu open/close
+      const menuBtn = document.getElementById("menu-btn");
+      const mobileMenu = document.getElementById("mobile-menu");
+      const closeMenu = document.getElementById("close-menu");
+      menuBtn.addEventListener("click", () => {
+        mobileMenu.classList.remove("hidden");
+        mobileMenu.classList.add("animate-slide-down");
+        mobileMenu.classList.remove("animate-slide-up");
+      });
+      closeMenu.addEventListener("click", () => {
+        mobileMenu.classList.remove("animate-slide-down");
+        mobileMenu.classList.add("animate-slide-up");
+        setTimeout(() => {
+          mobileMenu.classList.add("hidden");
+          mobileMenu.classList.remove("animate-slide-up");
+        }, 500);
+      });
+
+      // Fermer le menu mobile au clic sur un lien
+      document.querySelectorAll("#mobile-menu .nav-link").forEach((link) => {
+        link.addEventListener("click", () => {
+          mobileMenu.classList.remove("animate-slide-down");
+          mobileMenu.classList.add("animate-slide-up");
+          setTimeout(() => {
+            mobileMenu.classList.add("hidden");
+            mobileMenu.classList.remove("animate-slide-up");
+          }, 500);
+        });
+      });
+      // Scroll smooth pour tous les liens nav-link
+      document.querySelectorAll(".nav-link").forEach((link) => {
+        link.addEventListener("click", function (e) {
+          const href = this.getAttribute("href");
+          if (href && href.startsWith("#")) {
+            e.preventDefault();
+            const target = document.querySelector(href);
+            if (target) {
+              window.scrollTo({
+                top: target.offsetTop - 70,
+                behavior: "smooth",
+              });
+            }
+          }
+        });
+      });
+    </script>
+  </body>
+</html>

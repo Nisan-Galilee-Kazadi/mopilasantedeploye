@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tableau de bord - MopilaSanté</title>
+    <meta
+      name="description"
+      content="Espace membre MopilaSanté : suivez vos cotisations, historiques médicaux et demandez vos bons de soins."
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      .status-green {
+        background: linear-gradient(90deg, #22d3ee 0%, #22c55e 100%);
+      }
+      .status-yellow {
+        background: linear-gradient(90deg, #facc15 0%, #fbbf24 100%);
+      }
+      .status-red {
+        background: linear-gradient(90deg, #f87171 0%, #ef4444 100%);
+      }
+    </style>
+  </head>
+  <body class="bg-blue-50 min-h-screen font-sans">
+    <!-- Header/Nav -->
+    <nav
+      class="w-full bg-gradient-to-r from-blue-900 to-cyan-500 px-6 py-4 flex justify-between items-center shadow"
+    >
+      <div class="flex items-center gap-3">
+        <img
+          src="images/union.jpg"
+          alt="Logo MopilaSanté"
+          class="h-10 w-10 rounded-full border-2 border-cyan-400 shadow"
+        />
+        <span class="text-2xl font-bold text-white">MopilaSanté</span>
+      </div>
+      <a
+        href="login.html"
+        class="bg-white text-blue-700 px-5 py-2 rounded-full font-semibold shadow hover:bg-blue-50 transition"
+        >Déconnexion</a
+      >
+    </nav>
+
+    <div class="max-w-6xl mx-auto mt-10 px-4">
+      <!-- Bienvenue + résumé membre -->
+      <div
+        class="bg-white rounded-3xl shadow-xl p-8 flex flex-col md:flex-row md:items-center md:justify-between gap-8 mb-8"
+      >
+        <div>
+          <h2 class="text-2xl font-bold text-blue-800 mb-2">
+            Bienvenue, <span class="text-cyan-500">Jean Mopila</span>
+          </h2>
+          <p class="text-blue-700">
+            Matricule : <span class="font-semibold">MP-2024-001</span>
+          </p>
+          <p class="text-blue-700">
+            Téléphone : <span class="font-semibold">+243 800 000 000</span>
+          </p>
+        </div>
+        <div class="flex flex-col items-center">
+          <span class="text-blue-700 font-semibold mb-2"
+            >Statut cotisation</span
+          >
+          <div
+            class="status-green text-white px-6 py-2 rounded-full font-bold text-lg shadow"
+          >
+            À jour
+          </div>
+          <!-- Pour statut jaune : status-yellow, texte "Alerte : paiement du jour non effectué" -->
+          <!-- Pour statut rouge : status-red, texte "En retard" -->
+        </div>
+      </div>
+
+      <!-- Navigation des onglets -->
+      <div class="flex flex-wrap gap-4 mb-8">
+        <a
+          href="#accueil"
+          class="px-6 py-2 rounded-full bg-blue-500 text-white font-semibold shadow hover:bg-cyan-400 transition"
+          >Accueil</a
+        >
+        <a
+          href="#paiement"
+          class="px-6 py-2 rounded-full bg-white text-blue-700 font-semibold shadow hover:bg-blue-100 transition"
+          >Paiement</a
+        >
+        <a
+          href="#bons"
+          class="px-6 py-2 rounded-full bg-white text-blue-700 font-semibold shadow hover:bg-blue-100 transition"
+          >Bons médicaux</a
+        >
+        <a
+          href="#horsforfait"
+          class="px-6 py-2 rounded-full bg-white text-blue-700 font-semibold shadow hover:bg-blue-100 transition"
+          >Hors forfaits</a
+        >
+        <a
+          href="#profil"
+          class="px-6 py-2 rounded-full bg-white text-blue-700 font-semibold shadow hover:bg-blue-100 transition"
+          >Profil</a
+        >
+      </div>
+
+      <!-- Accueil (paiements récents, historiques médicaux) -->
+      <section id="accueil" class="mb-12">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <!-- Paiements récents -->
+          <div
+            class="bg-gradient-to-br from-cyan-100 to-blue-50 rounded-2xl shadow p-6"
+          >
+            <h3 class="text-xl font-bold text-blue-800 mb-4">
+              Paiements récents
+            </h3>
+            <ul class="space-y-2">
+              <li class="flex justify-between text-blue-700">
+                <span>15/07/2025</span><span>1 000 FCFA</span>
+              </li>
+              <li class="flex justify-between text-blue-700">
+                <span>14/07/2025</span><span>1 000 FCFA</span>
+              </li>
+              <li class="flex justify-between text-blue-700">
+                <span>13/07/2025</span><span>1 000 FCFA</span>
+              </li>
+            </ul>
+          </div>
+          <!-- Historique médical -->
+          <div
+            class="bg-gradient-to-br from-blue-100 to-cyan-50 rounded-2xl shadow p-6"
+          >
+            <h3 class="text-xl font-bold text-blue-800 mb-4">
+              Historique médical
+            </h3>
+            <ul class="space-y-2">
+              <li class="flex justify-between text-blue-700">
+                <span>12/07/2025</span><span>Clinique Mopila</span>
+              </li>
+              <li class="flex justify-between text-blue-700">
+                <span>05/07/2025</span><span>Hôpital du Cinquantenaire</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- Paiement -->
+      <section id="paiement" class="mb-12">
+        <div class="bg-white rounded-2xl shadow p-8">
+          <h3 class="text-xl font-bold text-blue-800 mb-4">
+            Effectuer un paiement
+          </h3>
+          <form class="flex flex-col md:flex-row md:items-end gap-4">
+            <div>
+              <label class="block text-blue-700 mb-1">Mode de paiement</label>
+              <select
+                class="border border-cyan-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400 text-blue-900"
+              >
+                <option>Mobile Money</option>
+                <option>Transfert bancaire</option>
+                <option>Point partenaire</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-blue-700 mb-1">Durée</label>
+              <select
+                class="border border-cyan-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400 text-blue-900"
+              >
+                <option>Journalier</option>
+                <option>Hebdomadaire</option>
+                <option>Mensuel</option>
+              </select>
+            </div>
+            <button
+              type="submit"
+              class="bg-blue-500 text-white px-8 py-3 rounded-full font-bold text-lg hover:bg-blue-400 transition"
+            >
+              Payer
+            </button>
+          </form>
+        </div>
+      </section>
+
+      <!-- Demande de bon médical -->
+      <section id="bons" class="mb-12">
+        <div class="bg-white rounded-2xl shadow p-8">
+          <h3 class="text-xl font-bold text-blue-800 mb-4">
+            Demander un bon médical
+          </h3>
+          <form class="flex flex-col gap-4">
+            <input
+              type="text"
+              placeholder="Problème de santé"
+              class="border border-cyan-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-400 text-blue-900"
+              required
+            />
+            <input
+              type="text"
+              placeholder="Personne concernée (vous ou membre famille)"
+              class="border border-cyan-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-400 text-blue-900"
+              required
+            />
+            <input
+              type="date"
+              class="border border-cyan-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-400 text-blue-900"
+              required
+            />
+            <button
+              type="submit"
+              class="bg-cyan-500 text-white px-8 py-3 rounded-full font-bold text-lg hover:bg-cyan-400 transition"
+            >
+              Envoyer la demande
+            </button>
+          </form>
+        </div>
+      </section>
+
+      <!-- Hors forfaits -->
+      <section id="horsforfait" class="mb-12">
+        <div
+          class="bg-gradient-to-br from-cyan-100 to-blue-50 rounded-2xl shadow p-8"
+        >
+          <h3 class="text-xl font-bold text-blue-800 mb-4">
+            Soins hors forfaits
+          </h3>
+          <table class="w-full text-blue-800">
+            <thead>
+              <tr class="border-b">
+                <th class="py-2">Date</th>
+                <th>Hôpital</th>
+                <th>Type de soin</th>
+                <th>Montant</th>
+                <th>Statut</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="py-2">10/07/2025</td>
+                <td>Clinique Mopila</td>
+                <td>Radio</td>
+                <td>20 000 FCFA</td>
+                <td>
+                  <span
+                    class="bg-yellow-200 text-yellow-800 px-3 py-1 rounded-full text-sm"
+                    >50% payé</span
+                  >
+                </td>
+              </tr>
+              <tr>
+                <td class="py-2">02/07/2025</td>
+                <td>Hôpital du Cinquantenaire</td>
+                <td>Scanner</td>
+                <td>50 000 FCFA</td>
+                <td>
+                  <span
+                    class="bg-green-200 text-green-800 px-3 py-1 rounded-full text-sm"
+                    >Payé</span
+                  >
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- Profil -->
+      <section id="profil" class="mb-12">
+        <div class="bg-white rounded-2xl shadow p-8">
+          <h3 class="text-xl font-bold text-blue-800 mb-4">Mon profil</h3>
+          <ul class="text-blue-800 space-y-2">
+            <li><span class="font-semibold">Nom :</span> Jean Mopila</li>
+            <li><span class="font-semibold">Matricule :</span> MP-2024-001</li>
+            <li>
+              <span class="font-semibold">Téléphone :</span> +243 800 000 000
+            </li>
+            <li>
+              <span class="font-semibold">Date d'inscription :</span> 01/06/2024
+            </li>
+          </ul>
+          <p class="text-sm text-blue-400 mt-4">
+            Pour toute modification, veuillez contacter l'administration
+            MopilaSanté.
+          </p>
+        </div>
+      </section>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Connexion - MopilaSanté</title>
+    <meta
+      name="description"
+      content="Connexion à l'espace membre MopilaSanté : accédez à votre tableau de bord santé solidaire."
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      .login-bg {
+        background: linear-gradient(135deg, #2563eb 0%, #06b6d4 100%);
+      }
+    </style>
+  </head>
+  <body class="login-bg min-h-screen flex items-center justify-center">
+    <div
+      class="bg-white rounded-3xl shadow-2xl p-8 md:p-12 w-full max-w-md flex flex-col items-center"
+    >
+      <a href="index.html" class="mb-6 flex flex-col items-center">
+        <img
+          src="images/union.jpg"
+          alt="Logo MopilaSanté"
+          class="h-16 w-16 rounded-full border-2 border-cyan-400 shadow mb-2"
+        />
+        <span class="text-2xl font-bold text-blue-700"
+          >Mopila<span class="text-cyan-500">Santé</span></span
+        >
+      </a>
+      <h1 class="text-2xl md:text-3xl font-bold text-blue-800 mb-6 text-center">
+        Connexion à l'espace membre
+      </h1>
+      <form class="w-full flex flex-col gap-5">
+        <input
+          type="text"
+          placeholder="Matricule"
+          class="border border-cyan-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-400 text-blue-900"
+          required
+        />
+        <input
+          type="tel"
+          placeholder="Téléphone"
+          class="border border-cyan-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-400 text-blue-900"
+          required
+        />
+        <!-- Message d'erreur -->
+        <div class="hidden text-red-500 text-sm" id="loginError">
+          Identifiants incorrects. Veuillez réessayer.
+        </div>
+        <button
+          type="submit"
+          class="bg-blue-500 text-white px-8 py-3 rounded-full font-bold text-lg hover:bg-blue-400 transition"
+        >
+          Se connecter
+        </button>
+      </form>
+      <a href="index.html" class="mt-6 text-cyan-600 hover:underline"
+        >&larr; Retour à l'accueil</a
+      >
+    </div>
+  </body>
+</html>
