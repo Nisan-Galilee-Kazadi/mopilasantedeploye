@@ -273,10 +273,14 @@ ${data.message ? `Message : ${data.message}` : ""}
 });
 
 window.onscroll = function () {
+  const navbar = document.getElementById("navbar");
+  if (!navbar) return;
   changeNavbarTheme();
 };
 
 function changeNavbarTheme() {
+  const navbar = document.getElementById("navbar");
+  if (!navbar) return;
   const navBar = document.getElementById("navBar");
   if (window.scrollY > 200) {
     navBar.classList.remove("bg-transparent");
