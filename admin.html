@@ -3,627 +3,859 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Admin - MopilaSanté</title>
-    <meta
-      name="description"
-      content="Espace d'administration MopilaSanté : supervision des membres, paiements, partenaires et opérations."
-    />
+    <title>Tableau de bord Membre - MopilaSanté</title>
     <link
       href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
       rel="stylesheet"
     />
     <link
       rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
     />
     <style>
-      .sidebar-mini {
-        width: 72px;
-        transition: width 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-        height: 100vh;
-        margin-right: 40px;
+      body {
+        background: linear-gradient(
+          135deg,
+          rgba(0, 32, 96, 0.173),
+          rgba(14, 232, 152, 0.791),
+          rgba(0, 149, 199, 0.7)
+        );
       }
-      .sidebar-mini:hover,
-      .sidebar-mini:focus-within {
-        width: 240px;
+      .glass {
+        background: rgba(255, 255, 255, 0.85);
+        backdrop-filter: blur(8px);
       }
-      .sidebar-mini .sidebar-label {
-        opacity: 0;
-        transition: opacity 0.2s;
-        white-space: nowrap;
+      .sidebar {
+        background: linear-gradient(180deg, #0a174e 60%, #1cb5e0 100%);
       }
-      .sidebar-mini:hover .sidebar-label,
-      .sidebar-mini:focus-within .sidebar-label {
-        opacity: 1;
+      .status-green {
+        background: #22c55e;
+        color: #fff;
       }
-      @media (max-width: 767px) {
-        .sidebar-mini {
-          width: 0;
-          position: fixed;
-          left: 0;
-          top: 0;
-          height: 100vh;
-          z-index: 50;
-          background: linear-gradient(to bottom, #1e3a8a, #06b6d4);
-          overflow: hidden;
+      .status-yellow {
+        background: #facc15;
+        color: #fff;
+      }
+      .status-red {
+        background: #ef4444;
+        color: #fff;
+      }
+      .tab-active {
+        border-bottom: 3px solid #2563eb;
+        color: #2563eb;
+        font-weight: bold;
+      }
+      .tab-inactive {
+        color: #64748b;
+      }
+      .sidebar-btn.active,
+      .sidebar-btn:focus.active {
+        background: #1e3a8a;
+        color: #fff;
+        box-shadow: 0 2px 8px 0 rgba(30, 58, 138, 0.15);
+        border-left: 4px solid #2563eb;
+      }
+      .sidebar-btn {
+        background: transparent;
+        color: #cbd5e1;
+      }
+      .sidebar-btn:hover {
+        background: #2563eb22;
+        color: #fff;
+      }
+      @media (max-width: 768px) {
+        .min-w-mobile-card {
+          min-width: 90vw !important;
+          padding-left: 1rem !important;
+          padding-right: 1rem !important;
         }
-        .sidebar-mini.open {
-          width: 240px;
+        .mobile-text {
+          font-size: 1rem !important;
+        }
+        .mobile-btn {
+          font-size: 1rem !important;
+          padding: 0.75rem 1.25rem !important;
         }
       }
     </style>
   </head>
-  <body class="bg-blue-50 min-h-screen font-sans">
-    <div class="flex min-h-screen">
-      <!-- Sidebar partielle -->
-      <aside
-        id="sidebar"
-        class="sidebar-mini bg-gradient-to-b from-blue-900 to-cyan-500 shadow-lg flex flex-col py-6 px-2 fixed md:relative h-full z-40"
+  <body class="min-h-screen flex">
+    <!-- Sidebar (desktop/tablette uniquement) -->
+    <aside
+      class="sidebar w-20 md:w-56 h-screen flex flex-col items-center py-8 px-2 md:px-4 text-white shadow-2xl fixed left-0 top-0 z-40 hidden md:flex"
+    >
+      <div class="mb-10 flex flex-col items-center">
+        <img
+          src="images/union.jpg"
+          alt="Logo"
+          class="h-14 w-14 rounded-full border-2 border-green-400 shadow mb-2"
+        />
+        <span class="hidden md:block font-bold text-lg tracking-wide"
+          >MopilaSanté</span
+        >
+      </div>
+      <nav
+        class="flex flex-col gap-6 w-full items-center md:items-start flex-1"
       >
-        <div class="flex flex-col items-center md:items-start gap-8">
+        <button
+          data-tab="accueil"
+          class="sidebar-btn flex items-center gap-3 w-full px-3 py-2 rounded-lg font-semibold transition focus:outline-none"
+        >
+          <i class="fa-solid fa-home"></i
+          ><span class="hidden md:inline">Accueil</span>
+        </button>
+        <button
+          data-tab="membres"
+          class="sidebar-btn flex items-center gap-3 w-full px-3 py-2 rounded-lg font-semibold transition focus:outline-none"
+        >
+          <i class="fa-solid fa-users"></i
+          ><span class="hidden md:inline">Membres</span>
+        </button>
+        <button
+          data-tab="hopitaux"
+          class="sidebar-btn flex items-center gap-3 w-full px-3 py-2 rounded-lg font-semibold transition focus:outline-none"
+        >
+          <i class="fa-solid fa-hospital"></i
+          ><span class="hidden md:inline">Hôpitaux partenaires</span>
+        </button>
+        <button
+          data-tab="validation"
+          class="sidebar-btn flex items-center gap-3 w-full px-3 py-2 rounded-lg font-semibold transition focus:outline-none"
+        >
+          <i class="fa-solid fa-file-medical"></i
+          ><span class="hidden md:inline">Validation des bons</span>
+        </button>
+        <button
+          data-tab="horsforfait"
+          class="sidebar-btn flex items-center gap-3 w-full px-3 py-2 rounded-lg font-semibold transition focus:outline-none"
+        >
+          <i class="fa-solid fa-notes-medical"></i
+          ><span class="hidden md:inline">Hors forfaits</span>
+        </button>
+        <button
+          data-tab="paiements"
+          class="sidebar-btn flex items-center gap-3 w-full px-3 py-2 rounded-lg font-semibold transition focus:outline-none"
+        >
+          <i class="fa-solid fa-wallet"></i
+          ><span class="hidden md:inline">Paiements</span>
+        </button>
+        <button
+          data-tab="situation"
+          class="sidebar-btn flex items-center gap-3 w-full px-3 py-2 rounded-lg font-semibold transition focus:outline-none"
+        >
+          <i class="fa-solid fa-chart-line"></i
+          ><span class="hidden md:inline">Situation active</span>
+        </button>
+        <button
+          data-tab="historique"
+          class="sidebar-btn flex items-center gap-3 w-full px-3 py-2 rounded-lg font-semibold transition focus:outline-none"
+        >
+          <i class="fa-solid fa-clock-rotate-left"></i
+          ><span class="hidden md:inline">Historique</span>
+        </button>
+      </nav>
+      <a
+        href="login.html"
+        class="flex items-center justify-center gap-3 w-full px-3 py-3 rounded-lg bg-blue-700 text-white font-bold text-1xl mb-2 mt-auto shadow hover:bg-blue-800 transition"
+        ><i class="fa-solid fa-sign-out text-1xl mx-auto"></i
+        ><span class="hidden md:inline">Déconnexion</span></a
+      >
+    </aside>
+    <!-- Menu mobile (drawer) -->
+    <div
+      id="mobileMenu"
+      class="fixed inset-0 z-50 bg-black bg-opacity-40 hidden md:hidden transition-all duration-500"
+    >
+      <div
+        id="mobileMenuContent"
+        class="w-[80vw] max-w-sm bg-gradient-to-br from-blue-900 via-green-400 to-blue-700 h-full shadow-2xl p-8 flex flex-col gap-8 transform -translate-x-full transition-transform duration-500 rounded-r-3xl relative overflow-hidden"
+      >
+        <!-- Logo filigrane en fond -->
+        <div
+          class="absolute inset-0 flex items-center justify-center pointer-events-none"
+        >
           <img
             src="images/union.jpg"
-            alt="Logo MopilaSanté"
-            class="h-10 w-10 rounded-full border-2 border-cyan-400 shadow mb-2"
+            alt="Logo filigrane"
+            class="w-52 h-52 opacity-10 object-contain"
           />
         </div>
-        <nav class="flex flex-col gap-2 mt-10">
-          <button
-            class="sidebar-link flex items-center gap-4 px-3 py-3 rounded-lg text-white hover:bg-cyan-600 transition"
-            data-section="dashboard"
+        <!-- Bouton fermeture -->
+        <button
+          id="closeBtn"
+          class="absolute top-4 right-6 text-3xl text-white z-10 focus:outline-none"
+          aria-label="Fermer le menu"
+        >
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+        <!-- Logo et nom -->
+        <div class="flex flex-col items-center z-10 mt-2 mb-2">
+          <img
+            src="images/union.jpg"
+            alt="Logo"
+            class="h-16 w-16 rounded-full border-2 border-green-400 shadow mb-2"
+          />
+          <span class="font-bold text-xl tracking-wide text-white drop-shadow"
+            >MopilaSanté</span
           >
-            <i class="fas fa-tachometer-alt text-xl"></i>
-            <span class="sidebar-label font-semibold">Accueil</span>
+        </div>
+        <!-- Navigation -->
+        <nav class="flex flex-col gap-4 z-10 mt-4">
+          <button
+            data-tab="accueil"
+            class="flex items-center gap-3 text-white text-xl font-semibold px-2 py-2 rounded-lg transition focus:outline-none"
+          >
+            <i class="fa-solid fa-home"></i> Accueil
           </button>
           <button
-            class="sidebar-link flex items-center gap-4 px-3 py-3 rounded-lg text-white hover:bg-cyan-600 transition"
-            data-section="membres"
+            data-tab="membres"
+            class="flex items-center gap-3 text-white text-xl font-semibold px-2 py-2 rounded-lg transition focus:outline-none"
           >
-            <i class="fas fa-users text-xl"></i>
-            <span class="sidebar-label font-semibold">Membres</span>
+            <i class="fa-solid fa-users"></i> Membres
           </button>
           <button
-            class="sidebar-link flex items-center gap-4 px-3 py-3 rounded-lg text-white hover:bg-cyan-600 transition"
-            data-section="hopitaux"
+            data-tab="hopitaux"
+            class="flex items-center gap-3 text-white text-xl font-semibold px-2 py-2 rounded-lg transition focus:outline-none"
           >
-            <i class="fas fa-hospital text-xl"></i>
-            <span class="sidebar-label font-semibold">Hôpitaux</span>
+            <i class="fa-solid fa-hospital"></i> Hôpitaux partenaires
           </button>
           <button
-            class="sidebar-link flex items-center gap-4 px-3 py-3 rounded-lg text-white hover:bg-cyan-600 transition"
-            data-section="bons"
+            data-tab="validation"
+            class="flex items-center gap-3 text-white text-xl font-semibold px-2 py-2 rounded-lg transition focus:outline-none"
           >
-            <i class="fas fa-file-medical text-xl"></i>
-            <span class="sidebar-label font-semibold">Bons</span>
+            <i class="fa-solid fa-file-medical"></i> Validation des bons
           </button>
           <button
-            class="sidebar-link flex items-center gap-4 px-3 py-3 rounded-lg text-white hover:bg-cyan-600 transition"
-            data-section="paiements"
+            data-tab="horsforfait"
+            class="flex items-center gap-3 text-white text-xl font-semibold px-2 py-2 rounded-lg transition focus:outline-none"
           >
-            <i class="fas fa-wallet text-xl"></i>
-            <span class="sidebar-label font-semibold">Paiements</span>
+            <i class="fa-solid fa-notes-medical"></i> Hors forfaits
           </button>
           <button
-            class="sidebar-link flex items-center gap-4 px-3 py-3 rounded-lg text-white hover:bg-cyan-600 transition"
-            data-section="situation"
+            data-tab="paiements"
+            class="flex items-center gap-3 text-white text-xl font-semibold px-2 py-2 rounded-lg transition focus:outline-none"
           >
-            <i class="fas fa-balance-scale text-xl"></i>
-            <span class="sidebar-label font-semibold">Situation</span>
+            <i class="fa-solid fa-wallet"></i> Paiements
           </button>
           <button
-            class="sidebar-link flex items-center gap-4 px-3 py-3 rounded-lg text-white hover:bg-cyan-600 transition"
-            data-section="historique"
+            data-tab="situation"
+            class="flex items-center gap-3 text-white text-xl font-semibold px-2 py-2 rounded-lg transition focus:outline-none"
           >
-            <i class="fas fa-history text-xl"></i>
-            <span class="sidebar-label font-semibold">Historique</span>
+            <i class="fa-solid fa-chart-line"></i> Situation active
+          </button>
+          <button
+            data-tab="historique"
+            class="flex items-center gap-3 text-white text-xl font-semibold px-2 py-2 rounded-lg transition focus:outline-none"
+          >
+            <i class="fa-solid fa-clock-rotate-left"></i> Historique
           </button>
         </nav>
-        <div class="mt-auto flex flex-col items-center md:items-start">
-          <a
-            href="login.html"
-            class="flex items-center gap-4 px-3 py-3 rounded-lg text-white hover:bg-red-400 transition mt-8"
-          >
-            <i class="fas fa-sign-out-alt text-xl text-[#faf]"></i>
-            <span class="sidebar-label font-semibold">Déconnexion</span>
-          </a>
-        </div>
-      </aside>
-      <!-- Main content -->
-      <div class="flex-1 flex flex-col min-h-screen md:ml-[72px]">
-        <!-- Header -->
-        <header
-          class="flex items-center justify-between bg-white shadow -ml-14 px-6 py-4 sticky top-0 z-30"
+        <a
+          href="login.html"
+          class="mt-auto border-2 border-white text-white px-4 py-2 rounded hover:bg-white hover:text-blue-700 transition font-bold text-lg z-10 flex items-center justify-center gap-2"
         >
-          <div class="flex items-center gap-4">
-            <button
-              id="sidebarToggle"
-              class="md:hidden text-blue-700 text-2xl focus:outline-none"
-            >
-              <i class="fas fa-bars"></i>
-            </button>
-            <h1 class="text-2xl font-bold text-blue-800">Tableau de bord</h1>
+          <i class="fa-solid fa-sign-out"></i> Déconnexion
+        </a>
+      </div>
+    </div>
+    <!-- Main -->
+    <main class="flex-1 flex flex-col min-h-screen ml-0 md:ml-56">
+      <!-- Header -->
+      <header
+        class="flex flex-col md:flex-row items-center justify-between px-4 md:px-6 py-6 bg-white bg-opacity-80 shadow glass w-full sticky top-0 z-40"
+      >
+        <div class="flex items-center gap-3 w-full md:w-auto">
+          <!-- Bouton menu mobile dans le header -->
+          <button
+            id="hamburgerBtn"
+            class="block md:hidden bg-blue-700 text-white p-3 rounded-full shadow-lg focus:outline-none"
+          >
+            <i class="fa-solid fa-bars text-2xl"></i>
+          </button>
+          <div>
+            <h1 class="text-2xl md:text-3xl font-bold text-blue-800">
+              Espace Administration
+            </h1>
+            <p class="text-gray-500 text-sm">
+              Supervision et gestion MopilaSanté
+            </p>
           </div>
-          <div class="flex items-center gap-4">
-            <div class="relative">
-              <input
-                type="text"
-                placeholder="Recherche..."
-                class="rounded-full border border-cyan-200 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-cyan-400 text-blue-900"
-              />
-              <i
-                class="fas fa-search absolute right-3 top-1/2 -translate-y-1/2 text-cyan-400"
-              ></i>
+        </div>
+        <div class="flex items-center gap-4 mt-4 md:mt-0">
+          <img
+            src="images/medecinhomme.jpg"
+            alt="Avatar"
+            class="h-12 w-12 rounded-full border-2 border-blue-400 shadow"
+          />
+        </div>
+      </header>
+      <!-- Tabs -->
+      <div
+        id="dashboard-tabs"
+        class="hidden md:flex gap-2 px-6 pt-6 pb-2 border-b border-blue-100 bg-gradient-to-r from-cyan-400 to-blue-500 bg-opacity-90"
+      >
+        <button
+          data-tab="accueil"
+          class="tab-active px-4 py-2 rounded-t focus:outline-none"
+        >
+          Accueil
+        </button>
+        <button
+          data-tab="membres"
+          class="tab-inactive px-4 py-2 rounded-t focus:outline-none"
+        >
+          Membres
+        </button>
+        <button
+          data-tab="hopitaux"
+          class="tab-inactive px-4 py-2 rounded-t focus:outline-none"
+        >
+          Hôpitaux partenaires
+        </button>
+        <button
+          data-tab="validation"
+          class="tab-inactive px-4 py-2 rounded-t focus:outline-none"
+        >
+          Validation des bons
+        </button>
+        <button
+          data-tab="horsforfait"
+          class="tab-inactive px-4 py-2 rounded-t focus:outline-none"
+        >
+          Hors forfaits
+        </button>
+        <button
+          data-tab="paiements"
+          class="tab-inactive px-4 py-2 rounded-t focus:outline-none"
+        >
+          Paiements
+        </button>
+        <button
+          data-tab="situation"
+          class="tab-inactive px-4 py-2 rounded-t focus:outline-none"
+        >
+          Situation active
+        </button>
+        <button
+          data-tab="historique"
+          class="tab-inactive px-4 py-2 rounded-t focus:outline-none"
+        >
+          Historique
+        </button>
+      </div>
+      <!-- Dashboard Accueil -->
+      <section
+        id="tab-accueil"
+        class="tab-content p-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"
+      >
+        <div
+          class="glass rounded-2xl shadow-lg p-6 flex flex-col gap-3 items-center"
+        >
+          <i class="fa-solid fa-users text-3xl text-blue-700 mb-2"></i>
+          <span class="text-3xl font-bold text-blue-800">1 250</span>
+          <span class="text-gray-600">Membres enregistrés</span>
+        </div>
+        <div
+          class="glass rounded-2xl shadow-lg p-6 flex flex-col gap-3 items-center"
+        >
+          <i class="fa-solid fa-hospital text-3xl text-green-600 mb-2"></i>
+          <span class="text-3xl font-bold text-green-700">8</span>
+          <span class="text-gray-600">Partenaires médicaux actifs</span>
+        </div>
+        <div
+          class="glass rounded-2xl shadow-lg p-6 flex flex-col gap-3 items-center"
+        >
+          <i class="fa-solid fa-file-medical text-3xl text-yellow-500 mb-2"></i>
+          <span class="text-3xl font-bold text-yellow-600">12</span>
+          <span class="text-gray-600">Bons en attente</span>
+        </div>
+        <div
+          class="glass rounded-2xl shadow-lg p-6 flex flex-col gap-3 items-center"
+        >
+          <i class="fa-solid fa-notes-medical text-3xl text-red-500 mb-2"></i>
+          <span class="text-3xl font-bold text-red-600">3</span>
+          <span class="text-gray-600">Cas hors forfait non soldé</span>
+        </div>
+      </section>
+      <!-- Onglet Membres -->
+      <section id="tab-membres" class="tab-content p-6 hidden">
+        <div class="glass rounded-2xl shadow-lg p-6 w-full overflow-x-auto">
+          <h2
+            class="text-xl font-bold text-blue-700 mb-4 flex items-center gap-2"
+          >
+            <i class="fa-solid fa-users"></i> Liste des membres
+          </h2>
+          <table class="w-full text-sm">
+            <thead>
+              <tr class="text-blue-700">
+                <th>Nom</th>
+                <th>Prénom</th>
+                <th>Téléphone</th>
+                <th>Statut</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Jean</td>
+                <td>Dupont</td>
+                <td>+243 900 000 000</td>
+                <td>
+                  <span class="bg-green-100 text-green-700 px-2 py-1 rounded"
+                    >Actif</span
+                  >
+                </td>
+                <td>
+                  <button class="bg-blue-600 text-white px-3 py-1 rounded">
+                    Fiche
+                  </button>
+                </td>
+              </tr>
+              <tr>
+                <td>Marie</td>
+                <td>Kabongo</td>
+                <td>+243 900 000 001</td>
+                <td>
+                  <span class="bg-yellow-100 text-yellow-700 px-2 py-1 rounded"
+                    >En attente</span
+                  >
+                </td>
+                <td>
+                  <button class="bg-blue-600 text-white px-3 py-1 rounded">
+                    Fiche
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+      <!-- Onglet Hôpitaux partenaires -->
+      <section id="tab-hopitaux" class="tab-content p-6 hidden">
+        <div class="glass rounded-2xl shadow-lg p-6 w-full">
+          <h2
+            class="text-2xl font-bold text-cyan-700 mb-6 flex items-center gap-2 justify-center"
+          >
+            <i class="fa-solid fa-hospital"></i> Hôpitaux partenaires
+          </h2>
+          <div
+            id="hopitaux-list"
+            class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
+          ></div>
+          <div class="flex flex-col md:flex-row gap-4 mt-8">
+            <div class="glass rounded-xl p-4 flex-1">
+              <h3 class="font-bold text-blue-700 mb-2">
+                Statistiques filtrables
+              </h3>
+              <div class="flex gap-2 mb-2">
+                <select class="border rounded px-2 py-1 text-sm">
+                  <option>Mois</option>
+                </select>
+                <select class="border rounded px-2 py-1 text-sm">
+                  <option>Trimestre</option>
+                </select>
+                <select class="border rounded px-2 py-1 text-sm">
+                  <option>Semestre</option>
+                </select>
+                <select class="border rounded px-2 py-1 text-sm">
+                  <option>Année</option>
+                </select>
+              </div>
+              <div class="text-sm text-gray-600">Statistiques à venir...</div>
             </div>
-            <button class="relative">
-              <i class="fas fa-bell text-xl text-cyan-400"></i>
+            <div class="glass rounded-xl p-4 flex-1">
+              <h3 class="font-bold text-blue-700 mb-2">
+                Historique des hors forfaits
+              </h3>
+              <div class="text-sm text-gray-600">Historique à venir...</div>
+            </div>
+            <div class="glass rounded-xl p-4 flex-1">
+              <h3 class="font-bold text-blue-700 mb-2">
+                Historique des paiements vers centres
+              </h3>
+              <div class="text-sm text-gray-600">Historique à venir...</div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <!-- Onglet Validation des bons -->
+      <section id="tab-validation" class="tab-content p-6 hidden">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div class="glass rounded-2xl shadow-lg p-6 flex flex-col gap-3">
+            <h2
+              class="text-lg font-bold text-yellow-700 flex items-center gap-2 mb-2"
+            >
+              <i class="fa-solid fa-file-medical"></i> Demande de bon
+            </h2>
+            <div class="flex flex-col gap-2 text-sm">
+              <span><b>Nom :</b> Jean Dupont</span>
+              <span><b>Date :</b> 12/03/2024</span>
+              <span><b>Type :</b> Consultation</span>
               <span
-                class="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full px-1"
-                >3</span
+                ><b>Statut :</b>
+                <span class="bg-yellow-100 text-yellow-700 px-2 py-1 rounded"
+                  >En attente</span
+                ></span
               >
-            </button>
-            <div class="flex items-center gap-2">
-              <img
-                src="images/union.jpg"
-                alt="Profil"
-                class="h-8 w-8 rounded-full border-2 border-cyan-400"
-              />
-              <span class="hidden md:inline text-blue-800 font-semibold"
-                >Admin</span
-              >
+            </div>
+            <div class="flex gap-2 mt-2">
+              <button class="bg-green-600 text-white px-3 py-1 rounded flex-1">
+                <i class="fa-solid fa-check"></i> Valider
+              </button>
+              <button class="bg-red-600 text-white px-3 py-1 rounded flex-1">
+                <i class="fa-solid fa-xmark"></i> Refuser
+              </button>
             </div>
           </div>
-        </header>
-        <main class="max-w-7xl mx-auto w-full px-4 py-8">
-          <!-- Dashboard général -->
-          <section id="section-dashboard">
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-10">
-              <div
-                class="bg-white rounded-2xl shadow-xl p-6 flex flex-col items-center"
-              >
-                <span class="text-4xl font-extrabold text-cyan-400">1 250</span>
-                <p class="text-blue-800 mt-2 font-semibold text-center">
-                  Membres
-                </p>
-              </div>
-              <div
-                class="bg-white rounded-2xl shadow-xl p-6 flex flex-col items-center"
-              >
-                <span class="text-4xl font-extrabold text-cyan-400">8</span>
-                <p class="text-blue-800 mt-2 font-semibold text-center">
-                  Partenaires
-                </p>
-              </div>
-              <div
-                class="bg-white rounded-2xl shadow-xl p-6 flex flex-col items-center"
-              >
-                <span class="text-4xl font-extrabold text-cyan-400">12</span>
-                <p class="text-blue-800 mt-2 font-semibold text-center">
-                  Bons en attente
-                </p>
-              </div>
-              <div
-                class="bg-white rounded-2xl shadow-xl p-6 flex flex-col items-center"
-              >
-                <span class="text-4xl font-extrabold text-cyan-400">3</span>
-                <p class="text-blue-800 mt-2 font-semibold text-center">
-                  Hors forfait
-                </p>
-              </div>
-            </div>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-              <div
-                class="bg-gradient-to-br from-cyan-100 to-blue-50 rounded-2xl shadow p-6"
-              >
-                <h3 class="text-xl font-bold text-blue-800 mb-4">
-                  Prochains paiements
-                </h3>
-                <ul class="space-y-2">
-                  <li class="flex justify-between text-blue-700">
-                    <span>Jean Mopila</span>
-                    <span>1 000 FCFA</span>
-                  </li>
-                  <li class="flex justify-between text-blue-700">
-                    <span>Marie Kasa</span>
-                    <span>1 000 FCFA</span>
-                  </li>
-                </ul>
-              </div>
-              <div
-                class="bg-gradient-to-br from-blue-100 to-cyan-50 rounded-2xl shadow p-6"
-              >
-                <h3 class="text-xl font-bold text-blue-800 mb-4">
-                  Activités récentes
-                </h3>
-                <ul class="space-y-2">
-                  <li class="flex justify-between text-blue-700">
-                    <span>Paiement reçu</span>
-                    <span>15/07/2025</span>
-                  </li>
-                  <li class="flex justify-between text-blue-700">
-                    <span>Bon validé</span>
-                    <span>14/07/2025</span>
-                  </li>
-                </ul>
-              </div>
-              <div
-                class="bg-gradient-to-br from-cyan-50 to-blue-50 rounded-2xl shadow p-6"
-              >
-                <h3 class="text-xl font-bold text-blue-800 mb-4">
-                  Tâches en attente
-                </h3>
-                <ul class="space-y-2">
-                  <li class="flex justify-between text-blue-700">
-                    <span>Valider bon</span>
-                    <span>Jean Mopila</span>
-                  </li>
-                  <li class="flex justify-between text-blue-700">
-                    <span>Enregistrer hors forfait</span>
-                    <span>Marie Kasa</span>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </section>
-          <!-- Membres -->
-          <section id="section-membres" class="hidden">
-            <h2 class="text-2xl font-bold text-blue-800 mb-6">
-              Liste des membres
-            </h2>
-            <div class="overflow-x-auto">
-              <table class="min-w-full bg-white rounded-2xl shadow-xl">
-                <thead>
-                  <tr class="bg-cyan-100 text-blue-800">
-                    <th class="py-3 px-4">Nom</th>
-                    <th>Matricule</th>
-                    <th>Téléphone</th>
-                    <th>Paiements</th>
-                    <th>Historique soins</th>
-                    <th>Hors forfaits</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr class="border-b">
-                    <td class="py-2 px-4">Jean Mopila</td>
-                    <td>MP-2024-001</td>
-                    <td>+243 800 000 000</td>
-                    <td>À jour</td>
-                    <td>2 visites</td>
-                    <td>1</td>
-                  </tr>
-                  <tr>
-                    <td class="py-2 px-4">Marie Kasa</td>
-                    <td>MP-2024-002</td>
-                    <td>+243 811 111 111</td>
-                    <td>En retard</td>
-                    <td>1 visite</td>
-                    <td>0</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </section>
-          <!-- Hôpitaux partenaires -->
-          <section id="section-hopitaux" class="hidden">
-            <h2 class="text-2xl font-bold text-blue-800 mb-6">
-              Hôpitaux partenaires
-            </h2>
-            <div class="overflow-x-auto">
-              <table class="min-w-full bg-white rounded-2xl shadow-xl">
-                <thead>
-                  <tr class="bg-cyan-100 text-blue-800">
-                    <th class="py-3 px-4">Nom</th>
-                    <th>Localisation</th>
-                    <th>Patients envoyés</th>
-                    <th>Hors forfaits</th>
-                    <th>Paiements reçus</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr class="border-b">
-                    <td class="py-2 px-4">Hôpital du Cinquantenaire</td>
-                    <td>Kinshasa</td>
-                    <td>12</td>
-                    <td>2</td>
-                    <td>1 200 000 FCFA</td>
-                  </tr>
-                  <tr>
-                    <td class="py-2 px-4">Clinique Mopila</td>
-                    <td>Kinshasa</td>
-                    <td>8</td>
-                    <td>1</td>
-                    <td>800 000 FCFA</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </section>
-          <!-- Validation des bons -->
-          <section id="section-bons" class="hidden">
-            <h2 class="text-2xl font-bold text-blue-800 mb-6">
-              Validation des bons médicaux
-            </h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-              <div
-                class="bg-white rounded-2xl shadow-xl p-6 flex flex-col gap-2"
-              >
-                <div class="flex justify-between items-center">
-                  <span class="font-semibold text-blue-700">Jean Mopila</span>
-                  <span class="text-cyan-500">12/07/2025</span>
-                </div>
-                <p class="text-blue-800">Problème : Consultation générale</p>
-                <p class="text-blue-800">Centre : Clinique Mopila</p>
-                <div class="flex gap-2 mt-2">
-                  <button
-                    class="bg-green-500 text-white px-4 py-2 rounded-full font-semibold hover:bg-green-400 transition"
-                  >
-                    Approuver
-                  </button>
-                  <button
-                    class="bg-red-500 text-white px-4 py-2 rounded-full font-semibold hover:bg-red-400 transition"
-                  >
-                    Refuser
-                  </button>
-                </div>
-              </div>
-              <div
-                class="bg-white rounded-2xl shadow-xl p-6 flex flex-col gap-2"
-              >
-                <div class="flex justify-between items-center">
-                  <span class="font-semibold text-blue-700">Marie Kasa</span>
-                  <span class="text-cyan-500">13/07/2025</span>
-                </div>
-                <p class="text-blue-800">Problème : Radio</p>
-                <p class="text-blue-800">Centre : Hôpital du Cinquantenaire</p>
-                <div class="flex gap-2 mt-2">
-                  <button
-                    class="bg-green-500 text-white px-4 py-2 rounded-full font-semibold hover:bg-green-400 transition"
-                  >
-                    Approuver
-                  </button>
-                  <button
-                    class="bg-red-500 text-white px-4 py-2 rounded-full font-semibold hover:bg-red-400 transition"
-                  >
-                    Refuser
-                  </button>
-                </div>
-              </div>
-            </div>
-          </section>
-          <!-- Hors forfaits -->
-          <section id="section-horsforfait" class="hidden">
-            <h2 class="text-2xl font-bold text-blue-800 mb-6">
-              Enregistrer un soin hors forfait
-            </h2>
-            <form
-              class="bg-white rounded-2xl shadow-xl p-6 flex flex-col gap-4 mb-8"
+          <div class="glass rounded-2xl shadow-lg p-6 flex flex-col gap-3">
+            <h2
+              class="text-lg font-bold text-yellow-700 flex items-center gap-2 mb-2"
             >
+              <i class="fa-solid fa-file-medical"></i> Demande de bon
+            </h2>
+            <div class="flex flex-col gap-2 text-sm">
+              <span><b>Nom :</b> Marie Kabongo</span>
+              <span><b>Date :</b> 13/03/2024</span>
+              <span><b>Type :</b> Soins dentaires</span>
+              <span
+                ><b>Statut :</b>
+                <span class="bg-yellow-100 text-yellow-700 px-2 py-1 rounded"
+                  >En attente</span
+                ></span
+              >
+            </div>
+            <div class="flex gap-2 mt-2">
+              <button class="bg-green-600 text-white px-3 py-1 rounded flex-1">
+                <i class="fa-solid fa-check"></i> Valider
+              </button>
+              <button class="bg-red-600 text-white px-3 py-1 rounded flex-1">
+                <i class="fa-solid fa-xmark"></i> Refuser
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+      <!-- Onglet Hors forfaits -->
+      <section id="tab-horsforfait" class="tab-content p-6 hidden">
+        <div
+          class="flex flex-col md:flex-row gap-2 md:gap-4 max-w-full px-2 md:px-0"
+        >
+          <div
+            class="glass rounded-2xl shadow-lg p-2 md:p-4 flex-1 min-w-0 w-full flex flex-col gap-4"
+          >
+            <h3
+              class="text-lg font-bold text-blue-700 flex items-center gap-2 mb-2"
+            >
+              <i class="fa-solid fa-notes-medical"></i> Enregistrer un hors
+              forfait
+            </h3>
+            <form class="flex flex-col gap-4">
               <input
                 type="text"
                 placeholder="Nom du membre"
-                class="border border-cyan-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-400 text-blue-900"
+                class="border border-blue-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-400 text-blue-900"
                 required
               />
               <input
                 type="datetime-local"
-                class="border border-cyan-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-400 text-blue-900"
+                class="border border-blue-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-400 text-blue-900"
                 required
               />
               <input
                 type="text"
                 placeholder="Lieu"
-                class="border border-cyan-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-400 text-blue-900"
+                class="border border-blue-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-400 text-blue-900"
                 required
               />
               <input
                 type="text"
                 placeholder="Motif"
-                class="border border-cyan-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-400 text-blue-900"
+                class="border border-blue-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-400 text-blue-900"
                 required
               />
               <input
                 type="number"
-                placeholder="Montant"
-                class="border border-cyan-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-400 text-blue-900"
+                placeholder="Montant (FC)"
+                class="border border-blue-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-400 text-blue-900"
                 required
               />
               <button
-                type="submit"
-                class="bg-blue-500 text-white px-8 py-3 rounded-full font-bold text-lg hover:bg-blue-400 transition"
+                class="w-full bg-gradient-to-r from-blue-600 to-green-400 text-white px-6 py-3 rounded-full font-bold text-lg shadow-lg flex items-center justify-center gap-2 hover:from-blue-700 hover:to-green-500 transition"
               >
-                Enregistrer
+                <i class="fa-solid fa-plus"></i> Enregistrer
               </button>
             </form>
-            <h3 class="text-xl font-bold text-blue-800 mb-4">
-              Suivi des hors forfaits
+          </div>
+          <div
+            class="glass rounded-2xl shadow-lg p-2 md:p-4 flex-1 min-w-0 w-full flex flex-col gap-4"
+          >
+            <h3
+              class="text-lg font-bold text-blue-700 flex items-center gap-2 mb-2"
+            >
+              <i class="fa-solid fa-list"></i> Suivi des hors forfaits
             </h3>
             <div class="overflow-x-auto">
-              <table class="min-w-full bg-white rounded-2xl shadow-xl">
+              <table class="w-full text-sm">
                 <thead>
-                  <tr class="bg-cyan-100 text-blue-800">
-                    <th class="py-3 px-4">Nom</th>
+                  <tr class="text-blue-700">
+                    <th>Nom</th>
                     <th>Date</th>
                     <th>Lieu</th>
                     <th>Motif</th>
                     <th>Montant</th>
-                    <th>Statut paiement</th>
+                    <th>Statut</th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr class="border-b">
-                    <td class="py-2 px-4">Jean Mopila</td>
-                    <td>10/07/2025 10:00</td>
-                    <td>Clinique Mopila</td>
-                    <td>Radio</td>
-                    <td>20 000 FCFA</td>
+                  <tr>
+                    <td>Jean Dupont</td>
+                    <td>12/03/2024 10:00</td>
+                    <td>Gombe</td>
+                    <td>Scanner</td>
+                    <td>10 000 FC</td>
                     <td>
                       <span
-                        class="bg-yellow-200 text-yellow-800 px-3 py-1 rounded-full text-sm"
-                        >50% payé</span
+                        class="bg-yellow-100 text-yellow-700 px-2 py-1 rounded"
+                        >À payer</span
+                      >
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Marie Kabongo</td>
+                    <td>13/03/2024 14:00</td>
+                    <td>Limete</td>
+                    <td>Radio</td>
+                    <td>4 000 FC</td>
+                    <td>
+                      <span
+                        class="bg-green-100 text-green-700 px-2 py-1 rounded"
+                        >Payé</span
                       >
                     </td>
                   </tr>
                 </tbody>
               </table>
             </div>
-          </section>
-          <!-- Paiements -->
-          <section id="section-paiements" class="hidden">
-            <h2 class="text-2xl font-bold text-blue-800 mb-6">Paiements</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-              <div>
-                <h3 class="text-lg font-semibold text-blue-700 mb-2">
-                  Reçus des membres
-                </h3>
-                <ul class="bg-white rounded-2xl shadow-xl p-6 space-y-2">
-                  <li class="flex justify-between text-blue-700">
-                    <span>Jean Mopila</span><span>1 000 FCFA</span>
-                  </li>
-                  <li class="flex justify-between text-blue-700">
-                    <span>Marie Kasa</span><span>1 000 FCFA</span>
-                  </li>
-                </ul>
-              </div>
-              <div>
-                <h3 class="text-lg font-semibold text-blue-700 mb-2">
-                  Versés aux centres
-                </h3>
-                <ul class="bg-white rounded-2xl shadow-xl p-6 space-y-2">
-                  <li class="flex justify-between text-blue-700">
-                    <span>Clinique Mopila</span><span>800 000 FCFA</span>
-                  </li>
-                  <li class="flex justify-between text-blue-700">
-                    <span>Hôpital du Cinquantenaire</span
-                    ><span>1 200 000 FCFA</span>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </section>
-          <!-- Situation active -->
-          <section id="section-situation" class="hidden">
-            <h2 class="text-2xl font-bold text-blue-800 mb-6">
-              Situation active de la caisse
-            </h2>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-              <div
-                class="bg-white rounded-2xl shadow-xl p-6 flex flex-col items-center"
-              >
-                <span class="text-3xl font-extrabold text-cyan-400"
-                  >2 000 000 FCFA</span
-                >
-                <p class="text-blue-800 mt-2 font-semibold text-center">
-                  Cotisations reçues
-                </p>
-              </div>
-              <div
-                class="bg-white rounded-2xl shadow-xl p-6 flex flex-col items-center"
-              >
-                <span class="text-3xl font-extrabold text-cyan-400"
-                  >1 500 000 FCFA</span
-                >
-                <p class="text-blue-800 mt-2 font-semibold text-center">
-                  Dépenses réalisées
-                </p>
-              </div>
-              <div
-                class="bg-white rounded-2xl shadow-xl p-6 flex flex-col items-center"
-              >
-                <span class="text-3xl font-extrabold text-cyan-400"
-                  >500 000 FCFA</span
-                >
-                <p class="text-blue-800 mt-2 font-semibold text-center">
-                  Solde disponible
-                </p>
-              </div>
-            </div>
-            <div class="mt-8">
-              <p class="text-blue-700 font-semibold">
-                Alerte : Solde inférieur au seuil de sécurité !
-              </p>
-            </div>
-          </section>
-          <!-- Historique des opérations -->
-          <section id="section-historique" class="hidden">
-            <h2 class="text-2xl font-bold text-blue-800 mb-6">
-              Historique des opérations
+          </div>
+        </div>
+      </section>
+      <!-- Onglet Paiements -->
+      <section id="tab-paiements" class="tab-content p-6 hidden">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div
+            class="glass rounded-2xl shadow-lg p-6 flex flex-col gap-3 h-full"
+          >
+            <h2 class="text-xl font-bold text-blue-700 flex items-center gap-2">
+              <i class="fa-solid fa-wallet"></i> Paiements reçus des membres
             </h2>
             <div class="overflow-x-auto">
-              <table class="min-w-full bg-white rounded-2xl shadow-xl">
+              <table class="w-full text-sm">
                 <thead>
-                  <tr class="bg-cyan-100 text-blue-800">
-                    <th class="py-3 px-4">Date</th>
-                    <th>Action</th>
-                    <th>Utilisateur</th>
-                    <th>Détail</th>
+                  <tr class="text-blue-700">
+                    <th>Date</th>
+                    <th>Nom</th>
+                    <th>Montant</th>
+                    <th>Mode</th>
+                    <th>Statut</th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr class="border-b">
-                    <td class="py-2 px-4">15/07/2025</td>
-                    <td>Paiement reçu</td>
-                    <td>Jean Mopila</td>
-                    <td>1 000 FCFA</td>
-                  </tr>
                   <tr>
-                    <td class="py-2 px-4">14/07/2025</td>
-                    <td>Bon validé</td>
-                    <td>Marie Kasa</td>
-                    <td>Radio - Hôpital du Cinquantenaire</td>
+                    <td>10/03/2024</td>
+                    <td>Jean Dupont</td>
+                    <td>2 000 FC</td>
+                    <td>Mobile</td>
+                    <td>
+                      <span
+                        class="bg-green-100 text-green-700 px-2 py-1 rounded"
+                        >Validé</span
+                      >
+                    </td>
                   </tr>
                 </tbody>
               </table>
             </div>
-          </section>
-        </main>
-      </div>
-    </div>
-    <script>
-      // Sidebar drawer mobile
-      const sidebar = document.getElementById("sidebar");
-      const sidebarToggle = document.getElementById("sidebarToggle");
-      function openSidebar() {
-        sidebar.classList.add("open");
-      }
-      function closeSidebar() {
-        sidebar.classList.remove("open");
-      }
-      if (sidebarToggle) {
-        sidebarToggle.addEventListener("click", openSidebar);
-        document.body.addEventListener("click", function (e) {
-          if (
-            e.target !== sidebar &&
-            !sidebar.contains(e.target) &&
-            e.target !== sidebarToggle
-          ) {
-            closeSidebar();
-          }
-        });
-      }
-      // Affichage dynamique des sections
-      const sections = [
-        "dashboard",
-        "membres",
-        "hopitaux",
-        "bons",
-        "horsforfait",
-        "paiements",
-        "situation",
-        "historique",
-      ];
-      document.querySelectorAll(".sidebar-link").forEach((btn) => {
-        btn.addEventListener("click", () => {
-          const section = btn.getAttribute("data-section");
-          sections.forEach((s) => {
-            const el = document.getElementById("section-" + s);
-            if (el) el.classList.toggle("hidden", s !== section);
-          });
-        });
-      });
-      // Par défaut, afficher dashboard
-      sections.forEach((s) => {
-        const el = document.getElementById("section-" + s);
-        if (el) el.classList.toggle("hidden", s !== "dashboard");
-      });
-    </script>
+          </div>
+          <div
+            class="glass rounded-2xl shadow-lg p-6 flex flex-col gap-3 h-full"
+          >
+            <h2
+              class="text-xl font-bold text-green-700 flex items-center gap-2"
+            >
+              <i class="fa-solid fa-university"></i> Paiements vers centres
+              médicaux
+            </h2>
+            <div class="overflow-x-auto">
+              <table class="w-full text-sm">
+                <thead>
+                  <tr class="text-blue-700">
+                    <th>Date</th>
+                    <th>Centre</th>
+                    <th>Montant</th>
+                    <th>Statut</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>11/03/2024</td>
+                    <td>Centre Gombe</td>
+                    <td>6 000 FC</td>
+                    <td>
+                      <span
+                        class="bg-green-100 text-green-700 px-2 py-1 rounded"
+                        >Validé</span
+                      >
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </section>
+      <!-- Onglet Situation active -->
+      <section id="tab-situation" class="tab-content p-6 hidden">
+        <div
+          class="glass rounded-2xl shadow-lg p-6 w-full flex flex-col gap-6 items-center"
+        >
+          <h2
+            class="text-xl font-bold text-blue-700 flex items-center gap-2 mb-2"
+          >
+            <i class="fa-solid fa-chart-line"></i> Situation de la caisse
+          </h2>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-6 w-full">
+            <div class="bg-blue-50 rounded-xl p-4 flex flex-col items-center">
+              <span class="text-sm text-gray-600">Cotisations reçues</span>
+              <span class="text-2xl font-bold text-green-600"
+                >12 000 000 FC</span
+              >
+            </div>
+            <div class="bg-blue-50 rounded-xl p-4 flex flex-col items-center">
+              <span class="text-sm text-gray-600">Dépenses réalisées</span>
+              <span class="text-2xl font-bold text-red-600">8 000 000 FC</span>
+            </div>
+            <div class="bg-blue-50 rounded-xl p-4 flex flex-col items-center">
+              <span class="text-sm text-gray-600">Solde disponible</span>
+              <span class="text-2xl font-bold text-blue-700">4 000 000 FC</span>
+            </div>
+          </div>
+          <div class="w-full mt-4">
+            <div
+              class="bg-yellow-100 text-yellow-700 rounded p-3 text-center font-semibold"
+            >
+              Alerte : Solde proche du seuil critique !
+            </div>
+          </div>
+        </div>
+      </section>
+      <!-- Onglet Historique -->
+      <section id="tab-historique" class="tab-content p-6 hidden">
+        <div class="glass rounded-2xl shadow-lg p-6 w-full overflow-x-auto">
+          <h2
+            class="text-xl font-bold text-blue-700 mb-4 flex items-center gap-2"
+          >
+            <i class="fa-solid fa-clock-rotate-left"></i> Historique des
+            opérations
+          </h2>
+          <table class="w-full text-sm">
+            <thead>
+              <tr class="text-blue-700">
+                <th>Date</th>
+                <th>Action</th>
+                <th>Utilisateur</th>
+                <th>Détails</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>12/03/2024</td>
+                <td>Connexion</td>
+                <td>Admin</td>
+                <td>Connexion réussie</td>
+              </tr>
+              <tr>
+                <td>12/03/2024</td>
+                <td>Paiement validé</td>
+                <td>Jean Dupont</td>
+                <td>2 000 FC</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+      <!-- Footer -->
+      <footer
+        class="w-full bg-white bg-opacity-80 backdrop-blur-lg shadow-2xl rounded-t-3xl pt-8 pb-3 px-2 md:px-16 mt-8"
+      >
+        <div
+          class="max-w-7xl mx-auto flex flex-col md:flex-row md:justify-between md:items-start gap-10"
+        >
+          <!-- Logo et contact -->
+          <div
+            class="flex-1 flex flex-col items-center md:items-start mb-6 md:mb-0"
+          >
+            <img
+              src="images/union.jpg"
+              alt="Logo MopilaSanté"
+              class="h-20 w-20 rounded-full bg-blue-100 object-cover mb-3 shadow-xl border-4 border-green-300"
+            />
+            <span class="font-bold text-2xl text-green-500 mb-1 drop-shadow"
+              >MopilaSanté</span
+            >
+            <span class="text-blue-700 font-semibold">Kinshasa, RDC</span>
+            <span class="text-blue-600">contact@mopilasanté.cd</span>
+            <span class="text-blue-600">+243 900 000 000</span>
+          </div>
+          <!-- Réseaux sociaux -->
+          <div class="flex-1 flex flex-col items-center md:items-start">
+            <span class="font-bold text-lg text-blue-700 mb-3"
+              >Suivez-nous</span
+            >
+            <div class="flex gap-4 mt-2 justify-center">
+              <a
+                href="#"
+                class="bg-blue-700 bg-opacity-90 hover:bg-green-400 hover:text-blue-900 transition rounded-full w-12 h-12 flex items-center justify-center shadow-lg"
+              >
+                <i class="fab fa-x-twitter fa-xl text-white"></i>
+              </a>
+              <a
+                href="#"
+                class="bg-blue-700 bg-opacity-90 hover:bg-green-400 hover:text-blue-900 transition rounded-full w-12 h-12 flex items-center justify-center shadow-lg"
+              >
+                <i class="fab fa-facebook-f fa-xl text-white"></i>
+              </a>
+              <a
+                href="#"
+                class="bg-blue-700 bg-opacity-90 hover:bg-green-400 hover:text-blue-900 transition rounded-full w-12 h-12 flex items-center justify-center shadow-lg"
+              >
+                <i class="fab fa-whatsapp fa-xl text-white"></i>
+              </a>
+              <a
+                href="#"
+                class="bg-blue-700 bg-opacity-90 hover:bg-green-400 hover:text-blue-900 transition rounded-full w-12 h-12 flex items-center justify-center shadow-lg"
+              >
+                <i class="fab fa-linkedin-in fa-xl text-white"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+        <div
+          class="border-t border-blue-200/40 mt-8 pt-4 text-center text-sm text-blue-700 font-semibold tracking-wide"
+        >
+          &copy; MopilaSanté <span id="footer-year">2024</span> par
+          <span class="font-bold text-green-500"
+            ><a href="https://galileokazadidev.netlify.app"
+              >Nisan-Galilée Kazadi</a
+            ></span
+          >. Tous droits réservés. ·
+          <a href="#" class="hover:underline">Mentions légales</a> ·
+          <a href="#" class="hover:underline">Politique de confidentialité</a>
+        </div>
+      </footer>
+    </main>
+    <script src="js/admin.js"></script>
+    <script src="js/main.js"></script>
   </body>
 </html>
