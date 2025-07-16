@@ -29,8 +29,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Retirer les classes pour l'animation
     requestAnimationFrame(() => {
-      mobileMenu.classList.remove("translate-x-full");
-      mobileMenuContent.classList.remove("translate-x-full");
+      mobileMenu.classList.remove("-translate-x-full");
+      mobileMenuContent.classList.remove("-translate-x-full");
     });
 
     isMenuOpen = true;
@@ -41,8 +41,8 @@ document.addEventListener("DOMContentLoaded", function () {
     if (!isMenuOpen) return;
 
     // Ajouter les classes pour l'animation
-    mobileMenu.classList.add("translate-x-full");
-    mobileMenuContent.classList.add("translate-x-full");
+    mobileMenu.classList.add("-translate-x-full");
+    mobileMenuContent.classList.add("-translate-x-full");
 
     // Attendre la fin de l'animation
     setTimeout(() => {
@@ -239,6 +239,30 @@ ${data.message ? `Message : ${data.message}` : ""}
       });
     }
   }
+
+  // Gestion du formulaire de paiement hors forfait
+  const horsforfaitForm = document.getElementById("horsforfait-paiement-form");
+  const horsforfaitSuccess = document.getElementById(
+    "horsforfait-paiement-success"
+  );
+  if (horsforfaitForm && horsforfaitSuccess) {
+    horsforfaitForm.addEventListener("submit", function (e) {
+      e.preventDefault();
+      horsforfaitSuccess.classList.remove("hidden");
+      setTimeout(() => {
+        horsforfaitSuccess.classList.add("hidden");
+        horsforfaitForm.reset();
+      }, 2500);
+    });
+  }
+
+  // Fermer le menu si on clique sur un lien ou un bouton de navigation dans le menu mobile
+  const mobileNavBtns = mobileMenuContent.querySelectorAll("[data-tab]");
+  mobileNavBtns.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      closeMenu();
+    });
+  });
 });
 
 window.onscroll = function () {
