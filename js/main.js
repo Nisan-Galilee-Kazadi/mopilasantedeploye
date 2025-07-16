@@ -34,6 +34,13 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     isMenuOpen = true;
+    // Attacher les handlers à chaque ouverture
+    const mobileNavBtns = mobileMenuContent.querySelectorAll("[data-tab]");
+    mobileNavBtns.forEach((btn) => {
+      btn.onclick = () => {
+        closeMenu();
+      };
+    });
   }
 
   // Fonction pour fermer le menu
