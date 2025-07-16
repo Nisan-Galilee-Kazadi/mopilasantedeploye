@@ -412,3 +412,20 @@ window.addEventListener("scroll", function () {
 document.addEventListener("DOMContentLoaded", function () {
   updateNavbarLinkColors();
 });
+
+function showTab(tab) {
+  tabContents.forEach((c) => c.classList.add("hidden"));
+  tabButtons.forEach((b) => b.classList.remove("tab-active"));
+  sidebarBtns.forEach((b) => b.classList.remove("active"));
+  document.getElementById("tab-" + tab).classList.remove("hidden");
+  // Scroll la barre d'onglets ou le header en haut
+  const tabsBar = document.getElementById("dashboard-tabs");
+  if (tabsBar && window.getComputedStyle(tabsBar).display !== "none") {
+    tabsBar.scrollIntoView({ behavior: "smooth", block: "start" });
+  } else {
+    // Sur mobile, scroll le header
+    const header = document.querySelector("header");
+    if (header) header.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+  // ... reste du code ...
+}

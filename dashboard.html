@@ -249,6 +249,7 @@
       </header>
       <!-- Tabs -->
       <div
+        id="dashboard-tabs"
         class="hidden md:flex gap-2 px-6 pt-6 pb-2 border-b border-blue-100 bg-white bg-opacity-70"
       >
         <button
@@ -541,11 +542,11 @@
       </div>
       <div id="tab-bon" class="tab-content p-6 hidden">
         <div
-          class="flex flex-col md:flex-row gap-4 md:gap-6 max-w-full md:max-w-6xl mx-auto px-2 md:px-0"
+          class="flex flex-col md:flex-row gap-2 md:gap-4 max-w-full px-2 md:px-0"
         >
           <!-- Formulaire de demande de bon -->
           <div
-            class="glass rounded-2xl shadow-lg p-4 md:p-6 flex-1 min-w-0 w-full"
+            class="glass rounded-2xl shadow-lg p-2 md:p-4 flex-1 min-w-0 w-full flex flex-col gap-4"
           >
             <h2 class="text-xl font-bold text-blue-700 flex items-center gap-2">
               <i class="fa-solid fa-file-medical"></i> Demande de bon médical
@@ -589,13 +590,8 @@
           </div>
           <!-- Liste des bons demandés -->
           <div
-            class="glass rounded-2xl shadow-lg p-4 md:p-6 flex-1 min-w-0 w-full"
+            class="glass rounded-2xl shadow-lg p-2 md:p-4 flex-1 min-w-0 w-full flex flex-col gap-4"
           >
-            <h2
-              class="text-lg font-bold text-blue-700 flex items-center gap-2 mb-4"
-            >
-              <i class="fa-solid fa-list"></i> Bons demandés
-            </h2>
             <div class="overflow-x-auto">
               <table class="w-full text-sm">
                 <thead>
@@ -672,17 +668,12 @@
       </div>
       <div id="tab-horsforfait" class="tab-content p-6 hidden">
         <div
-          class="flex flex-col md:flex-row gap-2 md:gap-4 max-w-full md:max-w-6xl mx-auto px-2 md:px-0"
+          class="flex flex-col md:flex-row gap-2 md:gap-4 max-w-full px-2 md:px-0"
         >
           <!-- Carte Soins hors forfaits -->
           <div
-            class="glass rounded-2xl shadow-lg p-2 md:p-4 flex-1 min-w-0 w-full"
+            class="glass rounded-2xl shadow-lg p-2 md:p-4 flex-1 min-w-0 w-full flex flex-col gap-4"
           >
-            <h2
-              class="text-xl font-bold text-yellow-700 flex items-center gap-2 mobile-text"
-            >
-              <i class="fa-solid fa-notes-medical"></i> Soins hors forfaits
-            </h2>
             <div class="overflow-x-auto">
               <table class="w-full text-sm">
                 <thead>
@@ -887,13 +878,79 @@
       </div>
       <!-- Footer -->
       <footer
-        class="w-full bg-gradient-to-r from-blue-900 to-blue-800 text-white pt-1 pb-4 px-4 md:px-16"
+        class="w-full bg-white bg-opacity-80 backdrop-blur-lg shadow-2xl rounded-t-3xl pt-8 pb-3 px-2 md:px-16 mt-8"
       >
         <div
-          class="border-t border-blue-800 mt-8 pt-4 text-center text-xs text-blue-200"
+          class="max-w-7xl mx-auto flex flex-col md:flex-row md:justify-between md:items-start gap-10"
+        >
+          <!-- Logo et contact -->
+          <div
+            class="flex-1 flex flex-col items-center md:items-start mb-6 md:mb-0"
+          >
+            <img
+              src="images/union.jpg"
+              alt="Logo MopilaSanté"
+              class="h-20 w-20 rounded-full bg-blue-100 object-cover mb-3 shadow-xl border-4 border-green-300"
+            />
+            <span class="font-bold text-2xl text-green-500 mb-1 drop-shadow"
+              >MopilaSanté</span
+            >
+            <span class="text-blue-700 font-semibold">Kinshasa, RDC</span>
+            <span class="text-blue-600">contact@mopilasanté.cd</span>
+            <span class="text-blue-600">+243 900 000 000</span>
+          </div>
+          <!-- Navigation -->
+          <!-- <div class="flex-1 flex flex-col items-center text-center md:items-center mb-6 md:mb-0">
+            <span class="font-bold text-lg text-blue-700 mb-3">Navigation</span>
+            <ul class="space-y-1">
+              <li><a href="#accueil" class="hover:text-green-500 transition flex items-center justify-center gap-2">Accueil</a></li>
+              <li><a href="#apropos" class="hover:text-green-500 transition flex items-center justify-center gap-2">À propos</a></li>
+              <li><a href="#valeurs" class="hover:text-green-500 transition flex items-center justify-center gap-2">Nos valeurs</a></li>
+              <li><a href="#stats" class="hover:text-green-500 transition flex items-center justify-center gap-2">Statistiques</a></li>
+              <li><a href="#partenaires" class="hover:text-green-500 transition flex items-center justify-center gap-2">Partenaires</a></li>
+              <li><a href="#temoignages" class="hover:text-green-500 transition flex items-center justify-center gap-2">Témoignages</a></li>
+              <li><a href="#fonctionnement" class="hover:text-green-500 transition flex items-center justify-center gap-2">Comment ça marche</a></li>
+              <li><a href="#contact" class="hover:text-green-500 transition flex items-center justify-center gap-2">Contact</a></li>
+            </ul>
+          </div> -->
+          <!-- Réseaux sociaux -->
+          <div class="flex-1 flex flex-col items-center md:items-start">
+            <span class="font-bold text-lg text-blue-700 mb-3"
+              >Suivez-nous</span
+            >
+            <div class="flex gap-4 mt-2 justify-center">
+              <a
+                href="#"
+                class="bg-blue-700 bg-opacity-90 hover:bg-green-400 hover:text-blue-900 transition rounded-full w-12 h-12 flex items-center justify-center shadow-lg"
+              >
+                <i class="fab fa-x-twitter fa-xl text-white"></i>
+              </a>
+              <a
+                href="#"
+                class="bg-blue-700 bg-opacity-90 hover:bg-green-400 hover:text-blue-900 transition rounded-full w-12 h-12 flex items-center justify-center shadow-lg"
+              >
+                <i class="fab fa-facebook-f fa-xl text-white"></i>
+              </a>
+              <a
+                href="#"
+                class="bg-blue-700 bg-opacity-90 hover:bg-green-400 hover:text-blue-900 transition rounded-full w-12 h-12 flex items-center justify-center shadow-lg"
+              >
+                <i class="fab fa-whatsapp fa-xl text-white"></i>
+              </a>
+              <a
+                href="#"
+                class="bg-blue-700 bg-opacity-90 hover:bg-green-400 hover:text-blue-900 transition rounded-full w-12 h-12 flex items-center justify-center shadow-lg"
+              >
+                <i class="fab fa-linkedin-in fa-xl text-white"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+        <div
+          class="border-t border-blue-200/40 mt-8 pt-4 text-center text-sm text-blue-700 font-semibold tracking-wide"
         >
           &copy; MopilaSanté <span id="footer-year">2024</span> par
-          <span class="font-bold text-blue-700"
+          <span class="font-bold text-green-500"
             ><a href="https://galileokazadidev.netlify.app"
               >Nisan-Galilée Kazadi</a
             ></span
