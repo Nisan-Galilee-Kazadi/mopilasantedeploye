@@ -12,56 +12,101 @@
       href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
       rel="stylesheet"
     />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
     <style>
       .login-bg {
-        background: linear-gradient(135deg, #2563eb 0%, #06b6d4 100%);
+        background: linear-gradient(
+          135deg,
+          rgba(0, 32, 96, 0.173),
+          rgba(14, 232, 152, 0.791),
+          rgba(0, 149, 199, 0.7)
+        );
       }
     </style>
   </head>
-  <body class="login-bg min-h-screen flex items-center justify-center">
+  <body
+    class="login-bg min-h-screen flex px-5 h-full items-center justify-center"
+  >
     <div
-      class="bg-white rounded-3xl shadow-2xl p-8 md:p-12 w-full max-w-md flex flex-col items-center"
+      class="bg-white bg-opacity-60 backdrop-blur-lg rounded-3xl shadow-2xl p-8 md:p-12 w-full max-w-md flex flex-col items-center relative border border-blue-100"
+      style="box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37)"
     >
       <a href="index.html" class="mb-6 flex flex-col items-center">
         <img
           src="images/union.jpg"
           alt="Logo MopilaSanté"
-          class="h-16 w-16 rounded-full border-2 border-cyan-400 shadow mb-2"
+          class="h-20 w-20 rounded-full border-4 border-cyan-400 shadow-lg mb-2 animate-bounce-slow"
         />
         <span class="text-2xl font-bold text-blue-700"
           >Mopila<span class="text-cyan-500">Santé</span></span
         >
       </a>
-      <h1 class="text-2xl md:text-3xl font-bold text-blue-800 mb-6 text-center">
+      <h1 class="text-2xl md:text-3xl font-bold text-blue-800 mb-2 text-center">
         Connexion à l'espace membre
       </h1>
+      <p class="text-blue-500 text-center mb-4 italic font-medium">
+        Votre santé, notre solidarité. Connectez-vous à votre espace MopilaSanté
+        !
+      </p>
       <form class="w-full flex flex-col gap-5">
-        <input
-          type="text"
-          placeholder="Matricule"
-          class="border border-cyan-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-400 text-blue-900"
-          required
-        />
-        <input
-          type="tel"
-          placeholder="Téléphone"
-          class="border border-cyan-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-400 text-blue-900"
-          required
-        />
+        <div class="relative flex items-center">
+          <span class="absolute left-4 top-3 -translate-y-1/2 text-blue-400"
+            ><i class="fa-solid fa-id-card"></i
+          ></span>
+          <input
+            type="text"
+            placeholder="Matricule"
+            class="pl-12 border border-cyan-300 rounded-full px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-400 text-blue-900 w-full"
+            required
+          />
+        </div>
+        <div class="relative flex items-center">
+          <span class="absolute left-4 top-3 -translate-y-1/2 text-blue-400"
+            ><i class="fa-solid fa-phone"></i
+          ></span>
+          <input
+            type="tel"
+            placeholder="Téléphone"
+            class="pl-12 border border-cyan-300 rounded-full px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-400 text-blue-900 w-full"
+            required
+          />
+        </div>
         <!-- Message d'erreur -->
-        <div class="hidden text-red-500 text-sm" id="loginError">
-          Identifiants incorrects. Veuillez réessayer.
+        <div class="hidden text-red-500 text-sm animate-pulse" id="loginError">
+          <i class="fa-solid fa-triangle-exclamation mr-2"></i>Identifiants
+          incorrects. Veuillez réessayer.
         </div>
         <button
           type="submit"
-          class="bg-blue-500 text-white px-8 py-3 rounded-full font-bold text-lg hover:bg-blue-400 transition"
+          class="w-full bg-gradient-to-r from-blue-600 to-cyan-400 text-white px-8 py-3 rounded-full font-bold text-lg shadow-lg flex items-center justify-center gap-2 hover:from-blue-700 hover:to-cyan-500 transition"
         >
-          Se connecter
+          <i class="fa-solid fa-arrow-right-to-bracket"></i> Se connecter
         </button>
       </form>
-      <a href="index.html" class="mt-6 text-cyan-600 hover:underline"
-        >&larr; Retour à l'accueil</a
+      <a
+        href="index.html"
+        class="mt-6 text-cyan-600 hover:underline flex items-center gap-2"
+        ><i class="fa-solid fa-arrow-left"></i> Retour à l'accueil</a
       >
+      <style>
+        @keyframes bounce-slow {
+          0%,
+          100% {
+            transform: translateY(0);
+          }
+          50% {
+            transform: translateY(-10px);
+          }
+        }
+        .animate-bounce-slow {
+          animation: bounce-slow 2.5s infinite;
+        }
+      </style>
     </div>
   </body>
 </html>
